@@ -99,19 +99,19 @@ enum HUDState:Equatable {
     var mask:AnimationObject? {
         if self == .revealed {
             return .init([
-                .init(0.6, delay: 0.2, easing: .bounce, width: 120, height: 120, blur: 0, radius: 66),
-                .init(2.9, easing: .bounce, width: 430, height: 120, blur: 0, radius: 66)], id: "initial")
+                .init(0.6, delay: 0.2, easing: .bounce, width: 100, height: 100, blur: 0, radius: 50),
+                .init(0.8, easing: .bounce, width: 380, height: 100, blur: 0, radius: 50)], id: "initial")
             
         }
         else if self == .detailed {
-            return .init([.init(0.0, easing: .bounce, width: 440, height: 220, radius: 42)], id:"expand_out")
+            return .init([.init(0.0, easing: .bounce, width: 480, height: 420, radius: 16)], id:"expand_out")
             
         }
         else if self == .dismissed {
             return .init([
-                .init(0.2, easing: .bounce, width: 430, height: 120, radius: 66),
-                .init(0.2, easing: .easeout, width: 120, height: 120, radius: 66),
-                .init(0.3, delay:1.0, easing: .bounce, width: 40, height: 40, opacity: 0, radius: 66)], id: "expand_close")
+                .init(0.3, easing: .bounce, width: 380, height: 100, radius: 50),
+                .init(0.3, easing: .easeout, width: 100, height: 100, radius: 50),
+                .init(0.3, delay: 0.4, easing: .bounce, width: 20, height: 20, opacity: 0, radius: 50)], id: "expand_close")
 
         }
         
@@ -194,13 +194,13 @@ struct HUDIcon: View {
                 }
                 
             }
-            .frame(width: 28, height: 28)
+            .frame(width: 32, height: 32)
             .foregroundColor(Color("BatterySubtitle"))
             .offset(y:1)
             
         }
-        .frame(width:50, height: 50)
-        .padding(.leading, 10)
+        .frame(width:44, height: 44)
+        .padding(.leading, 8)
         .padding(.trailing, 4)
         .background(Color.clear)
         
@@ -224,11 +224,12 @@ struct HUDSummary: View {
             
             VStack(alignment: .leading, spacing: 2) {
                 Text(self.title)
-                    .font(.system(size: 18, weight: .bold))
+                    .font(.system(size: 20, weight: .bold))
                     .foregroundColor(.white)
                     .lineLimit(2)
                 
                 ViewMarkdown($subtitle)
+                    .opacity(0.8)
                 
                 if self.updates.available != nil {
                     UpdatePromptView()
@@ -257,7 +258,7 @@ struct HUDSummary: View {
 
         }
         .onChange(of: window.state, perform: { newValue in
-            withAnimation(Animation.easeOut(duration: 0.6).delay(self.visible == false ? 0.9 : 0.0)) {
+            withAnimation(Animation.easeOut(duration: 0.6).delay(self.visible == false ? 0.8 : 0.0)) {
                 self.visible = newValue.visible
 
             }
@@ -297,7 +298,7 @@ struct HUDContainer: View {
             
         }
         .timeline($timeline ,state: $animation)
-        .padding(.leading, 20)
+        .padding(.leading, 4)
         .padding(.trailing, 10)
         .onAppear() {
             if let animation = window.state.container {
@@ -313,11 +314,11 @@ struct HUDContainer: View {
             }
             
             if newValue == .revealed {
-                withAnimation(Animation.easeOut.delay(0.75)) {
+                withAnimation(Animation.easeOut(duration: 0.8).delay(0.8)) {
                     self.progress = .trailing
-                    
                 }
-
+            } else if newValue == .progress || newValue == .hidden {
+                self.progress = .center
             }
           
         })
@@ -435,6 +436,8 @@ struct HUDProgress: View {
 
 struct HUDView: View {
     @EnvironmentObject var window:WindowManager
+    @EnvironmentObject var appManager:AppManager
+    @EnvironmentObject var bluetooth:BluetoothManager
 
     @State private var timeline:AnimationObject
     @State private var animation:AnimationState = .waiting
@@ -449,49 +452,186 @@ struct HUDView: View {
     
     var body: some View {
         ZStack(alignment: .center) {
-            VStack {
-                if self.window.state == .detailed {
+            if self.window.state == .detailed {
+                DetailedPanelView()
+            }
+            else {
+                VStack {
                     HUDContainer(animation: namespace, progress: $progress)
                         .matchedGeometryEffect(id: "hud", in: self.namespace)
-                    
-                    NavigationContainer()
-                                        
                 }
-                else {
-                    HUDContainer(animation: namespace, progress: $progress)
-                        .matchedGeometryEffect(id: "hud", in: self.namespace)
-
+                   
+                if progress == .center {
+                    HUDProgress().matchedGeometryEffect(id: "progress", in: self.namespace)
                 }
-                
             }
-               
-            if progress == .center {
-                HUDProgress().matchedGeometryEffect(id: "progress", in: self.namespace)
-
-            }
-            
         }
-        .frame(width: 440, height: 240)
+        .frame(width: window.state == .detailed ? 480 : 400, height: window.state == .detailed ? 650 : 200)
         .background(
-            Color("BatteryBackground").opacity(window.opacity)
-
+            ZStack {
+                if window.state == .detailed {
+                    VisualEffectView()
+                } else {
+                    Color("BatteryBackground").opacity(window.opacity)
+                }
+            }
         )
         .timeline($timeline, state: $animation)
         .mask(
             HUDMaskView()
-
         )
         .background(
-            HUDGlow()
-            
+            ZStack {
+                if window.state != .detailed {
+                    HUDGlow()
+                }
+            }
         )
         .onHover(perform: { hover in
             self.window.hover = hover
-            
         })
-        
     }
+}
+
+struct VisualEffectView: NSViewRepresentable {
+    func makeNSView(context: Context) -> NSVisualEffectView {
+        let view = NSVisualEffectView()
+        view.blendingMode = .behindWindow
+        view.state = .active
+        view.material = .popover
+        return view
+    }
+    func updateNSView(_ nsView: NSVisualEffectView, context: Context) {}
+}
+
+struct DetailedPanelView: View {
+    @EnvironmentObject var appManager: AppManager
+    @EnvironmentObject var bluetooth: BluetoothManager
+    @EnvironmentObject var battery: BatteryManager
+    @EnvironmentObject var settings: SettingsManager
     
+    @EnvironmentObject var window: WindowManager
+
+    var body: some View {
+        VStack(spacing: 0) {
+            // Header Bar
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("BeteriApp")
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                        .foregroundColor(.primary)
+                    Text("macOS System Utility")
+                        .font(.system(size: 9, weight: .medium))
+                        .foregroundColor(.secondary)
+                }
+                
+                Spacer()
+                
+                HStack(spacing: 8) {
+                    // Settings button
+                    Button(action: {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                            window.showSettings.toggle()
+                        }
+                    }) {
+                        Image(systemName: "gearshape.fill")
+                            .font(.system(size: 13, weight: .bold))
+                            .foregroundColor(.secondary)
+                            .frame(width: 26, height: 26)
+                            .background(Color.primary.opacity(0.04))
+                            .clipShape(Circle())
+                    }
+                    .buttonStyle(.plain)
+                    .help("Advanced Settings")
+                    
+                    // Quit button
+                    Button(action: {
+                        SettingsManager.shared.settingsAction(.init(.appQuit))
+                    }) {
+                        Image(systemName: "power")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundColor(.red.opacity(0.8))
+                            .frame(width: 26, height: 26)
+                            .background(Color.red.opacity(0.08))
+                            .clipShape(Circle())
+                    }
+                    .buttonStyle(.plain)
+                    .help("Quit BeteriApp")
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.top, 14)
+            .padding(.bottom, 12)
+            
+            Divider()
+                .opacity(0.4)
+            
+            // Top Section: Battery & Devices
+            HStack(alignment: .top, spacing: 14) {
+                // Left Column: MacBook Battery (BatteryHeroView)
+                VStack {
+                    Spacer()
+                    BatteryHeroView()
+                    Spacer()
+                }
+                .padding(14)
+                .frame(width: 160)
+                .frame(maxHeight: .infinity)
+                .background(Color.primary.opacity(0.04))
+                .cornerRadius(12)
+                
+                // Right Column: Connected Bluetooth Devices
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Connected Devices")
+                        .font(.system(size: 10, weight: .bold))
+                        .foregroundColor(.secondary)
+                        .padding(.leading, 4)
+                    
+                    let connectedDevices = bluetooth.list.filter { $0.connected == .connected }
+                    if !connectedDevices.isEmpty {
+                        ScrollView(.vertical, showsIndicators: true) {
+                            VStack(spacing: 8) {
+                                ForEach(connectedDevices, id: \.address) { device in
+                                    DeviceCardView(device: device)
+                                }
+                            }
+                            .padding(.trailing, 4)
+                        }
+                    } else {
+                        VStack(spacing: 12) {
+                            Spacer()
+                            Image(systemName: "bolt.horizontal.circle")
+                                .font(.system(size: 28))
+                                .foregroundColor(.secondary.opacity(0.4))
+                            Text("No Connected Devices")
+                                .font(.system(size: 11, weight: .medium))
+                                .foregroundColor(.secondary)
+                            Spacer()
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                }
+                .padding(14)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.primary.opacity(0.04))
+                .cornerRadius(12)
+            }
+            .frame(height: 200)
+            .padding(14)
+            
+            
+            if window.showSettings {
+                Divider()
+                    .opacity(0.4)
+                
+                // Bottom Section: Settings Form
+                RedesignedSettingsFormView()
+                    .padding(.top, 4)
+            }
+        }
+        .frame(width: 480, height: window.showSettings ? 650 : 270)
+        .clipped()
+    }
 }
 
 struct HUDParent: View {

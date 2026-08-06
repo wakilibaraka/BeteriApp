@@ -198,23 +198,18 @@ struct BatteryBoiApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
     var body: some Scene {
-        WindowGroup {
+        Settings {
             EmptyView()
-
         }
+        .windowStyle(.hiddenTitleBar)
         .handlesExternalEvents(matching: Set(arrayLiteral: "*"))
-        
     }
-    
 }
 
 class CustomView: NSView {
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        // Draw or add your custom elements here
-        
     }
-    
 }
 
 final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDelegate, ObservableObject {
@@ -225,54 +220,50 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
     public var updates = Set<AnyCancellable>()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        self.status = NSStatusBar.system.statusItem(withLength: 45)
-        self.hosting.frame.size = NSSize(width: 45, height: 22)
+        // Listen for setup completion
+        NotificationCenter.default.addObserver(self, selector: #selector(handleSetupCompleted), name: NSNotification.Name("BBSetupCompleted"), object: nil)
         
-        if let window = NSApplication.shared.windows.first {
-            window.close()
-
+        let hasCompletedSetup = UserDefaults.standard.bool(forKey: "hasCompletedSetup")
+        if hasCompletedSetup {
+            initializeApp()
         }
+    }
+    
+    @objc func handleSetupCompleted() {
+        initializeApp()
         
-        if let channel = Bundle.main.infoDictionary?["SD_SLACK_CHANNEL"] as? String  {
-            #if !DEBUG
-                EnalogManager.main.user(AppManager.shared.appIdentifyer)
-                EnalogManager.main.crash(SystemEvents.fatalError, channel: .init(.slack, id:channel))
-                EnalogManager.main.ingest(SystemEvents.userLaunched, description: "Launched BatteryBoi")
-            
-            #endif
-
-        }
+        // Setup is complete, but we don't force open the window here anymore
+        // so the app stays cleanly in the menu bar.
+    }
+    
+    private func initializeApp() {
+        self.status = NSStatusBar.system.statusItem(withLength: 65)
+        self.hosting.frame.size = NSSize(width: 65, height: 22)
+        
+        // Ensure DetailedPanelView always shows settings since it's the right-click menu now
+        WindowManager.shared.showSettings = true
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
             _ = SettingsManager.shared.enabledTheme
             _ = SettingsManager.shared.enabledDisplay()
             
-            _ = EventManager.shared
+
             
             print("\n\nApp Installed: \(AppManager.shared.appInstalled)\n\n")
             print("App Usage (Days): \(AppManager.shared.appUsage?.day ?? 0)\n\n")
 
             UpdateManager.shared.updateCheck()
             
-            WindowManager.shared.windowOpen(.userLaunched, device: nil)
+            if UserDefaults.standard.bool(forKey: "hasCompletedSetup") {
+                WindowManager.shared.windowOpen(.userLaunched, device: nil)
+            }
             
             SettingsManager.shared.$display.sink { type in
                 switch type {
                     case .hidden : self.applicationMenuBarIcon(false)
                     default : self.applicationMenuBarIcon(true)
-                    
                 }
-                
             }.store(in: &self.updates)
-            
-            if #available(macOS 13.0, *) {
-                if SettingsManager.shared.enabledAutoLaunch == .undetermined {
-                    SettingsManager.shared.enabledAutoLaunch = .enabled
-                    
-                }
-                
-            }
-            
         }
         
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(applicationHandleURLEvent(event:reply:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
@@ -280,7 +271,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
         NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(applicationDidWakeNotification(_:)), name: NSWorkspace.didWakeNotification, object: nil)
         NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(applicationDidSleepNotification(_:)), name: NSWorkspace.screensDidSleepNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationFocusDidMove(notification:)), name: NSWindow.didMoveNotification, object:nil)
-        
     }
     
     private func applicationMenuBarIcon(_ visible:Bool) {
@@ -290,6 +280,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
                 button.addSubview(self.hosting)
                 button.action = #selector(applicationStatusBarButtonClicked(sender:))
                 button.target = self
+                button.sendAction(on: [.leftMouseUp, .rightMouseUp])
                 
                 SettingsManager.shared.enabledPinned = .disabled
                 
@@ -306,16 +297,46 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
         
     }
     
-    @objc func applicationStatusBarButtonClicked(sender: NSStatusBarButton) {
-        if WindowManager.shared.windowIsVisible(.userInitiated) == false {
-            WindowManager.shared.windowOpen(.userInitiated, device: nil)
+    lazy var popover: NSPopover = {
+        let popover = NSPopover()
+        popover.contentSize = NSSize(width: 480, height: 650)
+        popover.behavior = .transient
+        
+        let view = DetailedPanelView()
+            .environmentObject(WindowManager.shared)
+            .environmentObject(AppManager.shared)
+            .environmentObject(BatteryManager.shared)
+            .environmentObject(SettingsManager.shared)
+            .environmentObject(UpdateManager.shared)
+            .environmentObject(StatsManager.shared)
+            .environmentObject(BluetoothManager.shared)
+        
+        popover.contentViewController = NSHostingController(rootView: view)
+        return popover
+    }()
 
+    @objc func applicationStatusBarButtonClicked(sender: NSStatusBarButton) {
+        let event = NSApp.currentEvent
+        let isRightClick = event?.type == .rightMouseUp || event?.type == .rightMouseDown || (event?.modifierFlags.contains(.control) == true)
+        
+        if isRightClick {
+            if popover.isShown {
+                popover.performClose(sender)
+            } else {
+                popover.show(relativeTo: sender.bounds, of: sender, preferredEdge: NSRectEdge.minY)
+            }
         }
         else {
-            WindowManager.shared.windowSetState(.dismissed)
+            if popover.isShown {
+                popover.performClose(sender)
+            }
             
+            if WindowManager.shared.state == .hidden || WindowManager.shared.state == .dismissed {
+                WindowManager.shared.windowOpen(.userInitiated, device: nil)
+            } else {
+                WindowManager.shared.windowSetState(.dismissed)
+            }
         }
-                
     }
     
     @objc func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {

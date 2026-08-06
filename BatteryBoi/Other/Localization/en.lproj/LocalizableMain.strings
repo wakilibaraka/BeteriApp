@@ -18,6 +18,7 @@
 "AlertLimitedSummary" = "Your battery might be insufficient for the event '%@'.";
 
 "TimestampHourFullAlertDeviceUnknownTitleLabel_Plural" = "%d hours";
+"AlertDeviceUnknownTitle" = "Unknown";
 "TimestampHourFullLabel_Single" = "%d hour";
 "TimestampHourFullLabel_Plural" = "%d hours";
 "TimestampMinuteFullLabel_Plural" = "%d minutes";

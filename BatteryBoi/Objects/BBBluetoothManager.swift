@@ -427,6 +427,11 @@ class BluetoothManager:ObservableObject {
                                                 updated.connected = status
                                                 updated.updated = Date()
                                                 
+                                                if status == .connected {
+                                                    WindowManager.shared.windowOpen(.deviceConnected, device: updated)
+                                                } else {
+                                                    WindowManager.shared.windowOpen(.deviceRemoved, device: updated)
+                                                }
                                             }
                                             
                                             if let index = self.list.firstIndex(where: {$0.address == device.addressString }) {
@@ -457,7 +462,7 @@ class BluetoothManager:ObservableObject {
                                                 if self.list[index].distance != updated.distance {
                                                     updated.distance = self.list[index].distance
                                                     updated.updated = Date()
-                                                    
+                                                    WindowManager.shared.windowOpen(.deviceDistance, device: updated)
                                                 }
                                                 
                                                 self.list[index] = updated
@@ -524,7 +529,12 @@ class BluetoothManager:ObservableObject {
                             update.connected = status
                             
                             self.list[index] = update
-                                                        
+                            
+                            if status == .connected {
+                                WindowManager.shared.windowOpen(.deviceConnected, device: update)
+                            } else {
+                                WindowManager.shared.windowOpen(.deviceRemoved, device: update)
+                            }
                         }
                         
                     }

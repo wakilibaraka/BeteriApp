@@ -1,0 +1,12 @@
+{
+  "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/SourcePackages/checkouts/FluidGradient/Sources/FluidGradient/BlobLayer.swift" : {
+    "abi-baseline-json" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradient.abi.json",
+    "const-values" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradient-primary.swiftconstvalues",
+    "dependencies" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradient-primary.d",
+    "diagnostics" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradient-primary.dia",
+    "objc-header" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradient-Swift.h",
+    "swiftdoc" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradient.swiftdoc",
+    "swiftmodule" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradient.swiftmodule",
+    "swiftsourceinfo" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradient.swiftsourceinfo"
+  }
+}

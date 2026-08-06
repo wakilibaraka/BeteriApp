@@ -184,3 +184,79 @@ struct BluetoothItem: View {
     }
     
 }
+
+struct DeviceCardView: View {
+    @ObservedObject var appManager = AppManager.shared
+    let device: BluetoothObject
+    
+    var body: some View {
+        let percent = device.battery.percent ?? 0
+        let isLowBattery = percent < 20
+        let isSelected = appManager.device == device
+        
+        HStack(spacing: 8) {
+            // Exact SF Symbol
+            Image(systemName: device.type.icon.isEmpty ? "headphones" : device.type.icon)
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(isLowBattery ? .orange : .primary.opacity(0.8))
+                .frame(width: 26, height: 26)
+                .background(Color.primary.opacity(0.04))
+                .clipShape(Circle())
+            
+            VStack(alignment: .leading, spacing: 3) {
+                Text(device.device ?? device.type.type.rawValue)
+                    .font(.system(size: 11, weight: .semibold, design: .rounded))
+                    .lineLimit(1)
+                    .foregroundColor(.primary)
+                
+                // Color-coded battery bar
+                GeometryReader { geo in
+                    let pct = CGFloat(percent) / 100.0
+                    let barColor: Color = {
+                        if pct < 0.2 { return .red }
+                        if pct < 0.5 { return .orange }
+                        return .green
+                    }()
+                    
+                    ZStack(alignment: .leading) {
+                        Capsule()
+                            .fill(Color.primary.opacity(0.08))
+                        
+                        Capsule()
+                            .fill(barColor)
+                            .frame(width: max(0, min(geo.size.width * pct, geo.size.width)))
+                    }
+                }
+                .frame(height: 4)
+            }
+            
+            Spacer()
+            
+            // Clean percentage badge
+            Text("\(Int(percent))%")
+                .font(.system(size: 10, weight: .bold, design: .rounded))
+                .foregroundColor(isLowBattery ? .orange : .secondary)
+                .padding(.horizontal, 6)
+                .padding(.vertical, 3)
+                .background(isLowBattery ? Color.orange.opacity(0.12) : Color.primary.opacity(0.05))
+                .cornerRadius(6)
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 8)
+        .background(isSelected ? Color.primary.opacity(0.08) : Color.primary.opacity(0.03))
+        .cornerRadius(12)
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(isLowBattery ? Color.orange.opacity(0.4) : (isSelected ? Color.primary.opacity(0.15) : Color.clear), lineWidth: 1.5)
+        )
+        .onTapGesture {
+            withAnimation(.easeOut) {
+                if appManager.device == device {
+                    appManager.device = nil
+                } else {
+                    appManager.device = device
+                }
+            }
+        }
+    }
+}

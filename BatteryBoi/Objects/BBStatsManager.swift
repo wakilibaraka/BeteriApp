@@ -362,34 +362,45 @@ class StatsManager:ObservableObject {
             let percent = Int(BatteryManager.shared.percentage)
             let remaining = BatteryManager.shared.remaining
             let full = BatteryManager.shared.powerUntilFull
-            let event = EventManager.shared.events.sorted(by: { $0.start > $1.start }).first
 
+
+            let isOnAC = BatteryManager.shared.charging.state == .charging
+            
             switch AppManager.shared.alert {
                 case .chargingComplete:return "AlertChargedSummary".localise()
-                case .chargingBegan:return "AlertStartedChargeSummary".localise([full?.time ?? "AlertDeviceUnknownTitle".localise()])
-                case .chargingStopped:return "AlertEstimateSummary".localise([remaining?.formatted ?? "AlertDeviceUnknownTitle".localise()])
                 case .percentFive:return "AlertPercentSummary".localise()
                 case .percentTen:return "AlertPercentSummary".localise()
                 case .percentTwentyFive:return "AlertPercentSummary".localise()
                 case .percentOne:return "AlertPercentSummary".localise()
                 case .percentMinThreshold:return "AlertPercentSummary".localise()
                 case .percentMaxThreshold:return "AlertChargeLimitSummary".localise()
-                case .userEvent:return "AlertLimitedSummary".localise([event?.name ?? "Unknown Event"])
                 case .deviceOverheating:return "AlertOverheatingSummary".localise()
                 default : break
-                
             }
             
-            if state == .charging {
-                switch percent {
-                    case 100 : return "AlertChargedSummary".localise()
-                    default : return "AlertStartedChargeSummary".localise([full?.time ?? "AlertDeviceUnknownTitle".localise()])
-                    
+            if isOnAC {
+                if percent == 100 {
+                    return "AlertChargedSummary".localise()
+                } else if !BatteryManager.shared.powerIsCharging {
+                    return "Charging on hold (Optimized)"
+                } else {
+                    if let f = full {
+                        return "AlertStartedChargeSummary".localise([f.time ?? ""])
+                    } else if BatteryManager.shared.powerIsCalculating {
+                        return "Calculating time until full..."
+                    } else {
+                        return "AlertStartedChargeSummary".localise(["AlertDeviceUnknownTitle".localise()])
+                    }
                 }
-                
+            } else {
+                if let r = remaining {
+                    return "AlertEstimateSummary".localise([r.formatted ?? ""])
+                } else if BatteryManager.shared.powerIsCalculating {
+                    return "Calculating time remaining..."
+                } else {
+                    return "AlertEstimateSummary".localise(["AlertDeviceUnknownTitle".localise()])
+                }
             }
-            
-            return "AlertEstimateSummary".localise([remaining?.formatted ?? "AlertDeviceUnknownTitle".localise()])
             
         }
         
@@ -403,7 +414,6 @@ class StatsManager:ObservableObject {
         else {
             switch AppManager.shared.alert {
                 case .deviceOverheating : return .init(name: "OverheatIcon", system: false)
-                case .userEvent : return .init(name: "EventIcon", system: false)
                 default : return .init(name: "ChargingIcon", system: false)
 
             }

@@ -247,6 +247,10 @@ struct BatteryIcon: View {
 
     }
     
+    var batteryColor: Color {
+        return .primary
+    }
+
     var body: some View {
         ZStack {
             HStack(alignment: .center) {
@@ -256,7 +260,7 @@ struct BatteryIcon: View {
     
             }
             .frame(maxWidth: self.size.width, alignment: .leading)
-            .foregroundColor(Color.black)
+            .foregroundColor(self.batteryColor)
             .overlay(
                 BatteryStatus(size, font: font, hover: $hover)
              
@@ -322,13 +326,16 @@ struct BatteryContainer: View {
     
     var body: some View {
         ZStack {
+            // Draw the colored inner fill directly
+            BatteryIcon(self.size, radius: self.radius, font: self.font, hover: self.$hover)
+            
+            // Draw the outer border and empty space (with a hole punched out for the fill)
             RoundedRectangle(cornerRadius: self.radius, style: .continuous)
                 .fill(Color("BatteryDefault"))
                 .opacity(0.9)
                 .frame(width:self.size.width, height: self.size.height)
                 .mask(
-                    Rectangle().inverse(BatteryIcon(size, radius: radius, font: font, hover: $hover))
-                    
+                    Rectangle().inverse(BatteryIcon(self.size, radius: self.radius, font: self.font, hover: self.$hover))
                 )
 
         }
@@ -373,26 +380,78 @@ struct BatteryContainer: View {
 }
 
 struct MenuContainer: View {
-    var body: some View {
-        BatteryContainer(.init(width: 32, height: 15), radius: 5, font: 11)
-            .environmentObject(BatteryManager.shared)
-            .environmentObject(StatsManager.shared)
-            .environmentObject(UpdateManager.shared)
+    @StateObject var manager = BatteryManager.shared
+    @StateObject var updates = UpdateManager.shared
 
+    var body: some View {
+        HStack(spacing: 5) {
+            // Battery Icon (Samsung Style)
+            HStack(spacing: 1.5) {
+                ZStack(alignment: .center) {
+                    ZStack(alignment: .leading) {
+                        RoundedRectangle(cornerRadius: 3.5, style: .continuous)
+                            .stroke(Color.primary.opacity(0.6), lineWidth: 1.2)
+                            .frame(width: 22, height: 12)
+                        
+                        let batteryColor: Color = {
+                            if manager.percentage > 30 { return .green }
+                            if manager.percentage > 10 { return .yellow }
+                            return .red
+                        }()
+                        
+                        RoundedRectangle(cornerRadius: 2, style: .continuous)
+                            .fill(batteryColor)
+                            .frame(width: max(0, min(18, 18 * (manager.percentage / 100))), height: 8)
+                            .padding(.leading, 2)
+                    }
+                    
+                    // Charging Bolt Overlay
+                    if manager.charging.state == .charging {
+                        Image(systemName: "bolt.fill")
+                            .font(.system(size: 8))
+                            .foregroundColor(Color(NSColor.windowBackgroundColor))
+                    }
+                }
+                
+                // Terminal Tip
+                RoundedRectangle(cornerRadius: 1)
+                    .fill(Color.primary.opacity(0.6))
+                    .frame(width: 1.5, height: 4)
+            }
+            .overlay(
+                Group {
+                    if let _ = updates.available {
+                        Circle()
+                            .fill(Color.blue)
+                            .frame(width: 4, height: 4)
+                            .offset(x: -4, y: -8)
+                    }
+                }, alignment: .topLeading
+            )
+            
+            // Percentage Text
+            Text("\(Int(manager.percentage))%")
+                .font(.system(size: 12, weight: .bold, design: .rounded))
+                .foregroundColor(.primary)
+                .offset(y: -0.5)
+        }
+        .frame(maxHeight: .infinity)
     }
-    
+}
+
+class ClickThroughHostingView<Content: View>: NSHostingView<Content> {
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        return nil
+    }
 }
 
 struct MenuViewRepresentable: NSViewRepresentable {
-    func makeNSView(context: Context) -> NSHostingView<MenuContainer> {
-        let hostingView = NSHostingView(rootView: MenuContainer())
+    func makeNSView(context: Context) -> ClickThroughHostingView<MenuContainer> {
+        let hostingView = ClickThroughHostingView(rootView: MenuContainer())
         hostingView.frame.size = NSSize(width: 100, height: 20)
         return hostingView
-        
     }
 
-    func updateNSView(_ nsView: NSHostingView<MenuContainer>, context: Context) {
-
+    func updateNSView(_ nsView: ClickThroughHostingView<MenuContainer>, context: Context) {
     }
-    
 }

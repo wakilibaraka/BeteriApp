@@ -1,0 +1,12 @@
+{
+  "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/KeyboardShortcuts.build/Release/KeyboardShortcuts.build/DerivedSources/resource_bundle_accessor.swift" : {
+    "abi-baseline-json" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/KeyboardShortcuts.build/Release/KeyboardShortcuts.build/Objects-normal/arm64/KeyboardShortcuts.abi.json",
+    "const-values" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/KeyboardShortcuts.build/Release/KeyboardShortcuts.build/Objects-normal/arm64/KeyboardShortcuts-primary.swiftconstvalues",
+    "dependencies" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/KeyboardShortcuts.build/Release/KeyboardShortcuts.build/Objects-normal/arm64/KeyboardShortcuts-primary.d",
+    "diagnostics" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/KeyboardShortcuts.build/Release/KeyboardShortcuts.build/Objects-normal/arm64/KeyboardShortcuts-primary.dia",
+    "objc-header" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/KeyboardShortcuts.build/Release/KeyboardShortcuts.build/Objects-normal/arm64/KeyboardShortcuts-Swift.h",
+    "swiftdoc" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/KeyboardShortcuts.build/Release/KeyboardShortcuts.build/Objects-normal/arm64/KeyboardShortcuts.swiftdoc",
+    "swiftmodule" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/KeyboardShortcuts.build/Release/KeyboardShortcuts.build/Objects-normal/arm64/KeyboardShortcuts.swiftmodule",
+    "swiftsourceinfo" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/KeyboardShortcuts.build/Release/KeyboardShortcuts.build/Objects-normal/arm64/KeyboardShortcuts.swiftsourceinfo"
+  }
+}

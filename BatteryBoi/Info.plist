@@ -19,8 +19,8 @@
 	<string>BatteryBoi</string>
 	<key>MDItemKeywords</key>
 	<string>Battery,Power,BatteryBoi</string>
-	<key>NSCalendarsFullAccessUsageDescription</key>
-	<string>We check your calendar to ensure your battery lasts for your conference calls.</string>
+	<key>LSUIElement</key>
+	<true/>
 	<key>SD_SLACK_CHANNEL</key>
 	<string>$(SD_SLACK_CHANNEL)</string>
 	<key>SUFeedURL</key>

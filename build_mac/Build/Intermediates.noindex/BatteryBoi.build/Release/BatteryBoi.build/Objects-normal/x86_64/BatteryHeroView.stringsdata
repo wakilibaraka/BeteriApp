@@ -1,0 +1,24 @@
+{
+  "source": "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/BatteryBoi/Views/Component/BatteryHeroView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "%lld%%",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "Charging...",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 105
+        }
+      }
+    ]
+  },
+  "version": 1
+}

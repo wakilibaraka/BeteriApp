@@ -1,0 +1,16 @@
+{
+  "" : {
+    "const-values" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/EnalogSwift.build/Release/EnalogSwift.build/Objects-normal/x86_64/EnalogSwift-primary.swiftconstvalues",
+    "dependencies" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/EnalogSwift.build/Release/EnalogSwift.build/Objects-normal/x86_64/EnalogSwift-primary.d",
+    "diagnostics" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/EnalogSwift.build/Release/EnalogSwift.build/Objects-normal/x86_64/EnalogSwift-primary.dia",
+    "emit-module-dependencies" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/EnalogSwift.build/Release/EnalogSwift.build/Objects-normal/x86_64/EnalogSwift-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/EnalogSwift.build/Release/EnalogSwift.build/Objects-normal/x86_64/EnalogSwift-primary-emit-module.dia",
+    "pch" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/EnalogSwift.build/Release/EnalogSwift.build/Objects-normal/x86_64/EnalogSwift-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/EnalogSwift.build/Release/EnalogSwift.build/Objects-normal/x86_64/EnalogSwift-primary.swiftdeps"
+  },
+  "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/SourcePackages/checkouts/EnalogSwift/Sources/EnalogSwift.swift" : {
+    "index-unit-output-path" : "/EnalogSwift.build/Release/EnalogSwift.build/Objects-normal/x86_64/EnalogSwift.o",
+    "llvm-bc" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/EnalogSwift.build/Release/EnalogSwift.build/Objects-normal/x86_64/EnalogSwift.bc",
+    "object" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/EnalogSwift.build/Release/EnalogSwift.build/Objects-normal/x86_64/EnalogSwift.o"
+  }
+}

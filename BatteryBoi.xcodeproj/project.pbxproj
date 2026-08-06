@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+
 		D83CD7452AA8F693004223D7 /* BBBluetoothView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83CD7442AA8F693004223D7 /* BBBluetoothView.swift */; };
 		D83CD7472AAB9370004223D7 /* BBProfileScript.py in Resources */ = {isa = PBXBuildFile; fileRef = D83CD7462AAB9370004223D7 /* BBProfileScript.py */; };
+		D83CD79A2AA8F693004223D9 /* BatteryHeroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83CD7992AA8F693004223D9 /* BatteryHeroView.swift */; };
 		D83DD3F52A9908E600FCC534 /* BBUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83DD3F42A9908E600FCC534 /* BBUpdateManager.swift */; };
 		D83DD3F82A9BBF4600FCC534 /* BBProfilerList.py in Resources */ = {isa = PBXBuildFile; fileRef = D83DD3F72A9BBF4500FCC534 /* BBProfilerList.py */; };
 		D83DD3FA2A9D62AF00FCC534 /* BBStatsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83DD3F92A9D62AF00FCC534 /* BBStatsManager.swift */; };
@@ -19,7 +21,7 @@
 		D851F7FF2AB0FC20003FCA79 /* BBHUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D851F7FE2AB0FC20003FCA79 /* BBHUDView.swift */; };
 		D851F8022AB152B7003FCA79 /* BBUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D851F8012AB152B7003FCA79 /* BBUpdateView.swift */; };
 		D851F8062AB214E8003FCA79 /* BBDataObject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D851F8042AB214E8003FCA79 /* BBDataObject.xcdatamodeld */; };
-		D851F8082AB8F49C003FCA79 /* BBEventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D851F8072AB8F49B003FCA79 /* BBEventManager.swift */; };
+
 		D851F80A2ABA29A0003FCA79 /* BBNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D851F8092ABA299F003FCA79 /* BBNavigationView.swift */; };
 		D891134D2AAC34DC00B5E4F5 /* BBAnimationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D891134C2AAC34DC00B5E4F5 /* BBAnimationManager.swift */; };
 		D89CCFEE2A9FF97900D9531A /* BBAboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89CCFED2A9FF97900D9531A /* BBAboutView.swift */; };
@@ -41,7 +43,7 @@
 		D8DFD5842A8C26F300732635 /* BBSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DFD5832A8C26F300732635 /* BBSettingsView.swift */; };
 		D8DFD58E2A8D83B500732635 /* EnalogSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D8DFD58D2A8D83B500732635 /* EnalogSwift */; };
 		D8DFD5932A956D2C00732635 /* BBBluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DFD5922A956D2C00732635 /* BBBluetoothManager.swift */; };
-		D8F2671E2AB00558003A6420 /* SMC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2671D2AB00557003A6420 /* SMC.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -58,8 +60,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+
 		D83CD7442AA8F693004223D7 /* BBBluetoothView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBBluetoothView.swift; sourceTree = "<group>"; };
 		D83CD7462AAB9370004223D7 /* BBProfileScript.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = BBProfileScript.py; sourceTree = "<group>"; };
+		D83CD7992AA8F693004223D9 /* BatteryHeroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryHeroView.swift; sourceTree = "<group>"; };
 		D83DD3F42A9908E600FCC534 /* BBUpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBUpdateManager.swift; sourceTree = "<group>"; };
 		D83DD3F72A9BBF4500FCC534 /* BBProfilerList.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = BBProfilerList.py; sourceTree = "<group>"; };
 		D83DD3F92A9D62AF00FCC534 /* BBStatsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBStatsManager.swift; sourceTree = "<group>"; };
@@ -76,7 +80,7 @@
 		D851F8002AB126AA003FCA79 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LocalizableMain.strings; sourceTree = "<group>"; };
 		D851F8012AB152B7003FCA79 /* BBUpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBUpdateView.swift; sourceTree = "<group>"; };
 		D851F8052AB214E8003FCA79 /* BBDataObject.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BBDataObject.xcdatamodel; sourceTree = "<group>"; };
-		D851F8072AB8F49B003FCA79 /* BBEventManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBEventManager.swift; sourceTree = "<group>"; };
+
 		D851F8092ABA299F003FCA79 /* BBNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBNavigationView.swift; sourceTree = "<group>"; };
 		D864D09E2AAF9C1E00842526 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/LocalizableMain.strings; sourceTree = "<group>"; };
 		D864D09F2AAF9C8500842526 /* sl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sl; path = sl.lproj/LocalizableMain.strings; sourceTree = "<group>"; };
@@ -107,7 +111,7 @@
 		D8DFD5832A8C26F300732635 /* BBSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBSettingsView.swift; sourceTree = "<group>"; };
 		D8DFD5852A8D510200732635 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		D8DFD5922A956D2C00732635 /* BBBluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBBluetoothManager.swift; sourceTree = "<group>"; };
-		D8F2671D2AB00557003A6420 /* SMC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMC.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,7 +133,7 @@
 		D83DD3F62A9BBF2E00FCC534 /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
-				D8F2671D2AB00557003A6420 /* SMC.swift */,
+
 				D83DD3F72A9BBF4500FCC534 /* BBProfilerList.py */,
 				D83DD3FB2A9E691300FCC534 /* BBIOREGList.py */,
 				D83CD7462AAB9370004223D7 /* BBProfileScript.py */,
@@ -236,7 +240,7 @@
 				D8DFD5922A956D2C00732635 /* BBBluetoothManager.swift */,
 				D8CDA7FF2AA250B500FAD41E /* BBTriggerManager.swift */,
 				D891134C2AAC34DC00B5E4F5 /* BBAnimationManager.swift */,
-				D851F8072AB8F49B003FCA79 /* BBEventManager.swift */,
+
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -245,6 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				D851F7FE2AB0FC20003FCA79 /* BBHUDView.swift */,
+
 			);
 			path = Window;
 			sourceTree = "<group>";
@@ -256,6 +261,7 @@
 				D8DFD5812A8BD7E800732635 /* BBProgressView.swift */,
 				D8DFD5832A8C26F300732635 /* BBSettingsView.swift */,
 				D83CD7442AA8F693004223D7 /* BBBluetoothView.swift */,
+				D83CD7992AA8F693004223D9 /* BatteryHeroView.swift */,
 				D89CCFED2A9FF97900D9531A /* BBAboutView.swift */,
 				D851F8012AB152B7003FCA79 /* BBUpdateView.swift */,
 				D851F8092ABA299F003FCA79 /* BBNavigationView.swift */,
@@ -381,7 +387,7 @@
 				D89CCFEE2A9FF97900D9531A /* BBAboutView.swift in Sources */,
 				D83DD3FA2A9D62AF00FCC534 /* BBStatsManager.swift in Sources */,
 				D8DFD5842A8C26F300732635 /* BBSettingsView.swift in Sources */,
-				D851F8082AB8F49C003FCA79 /* BBEventManager.swift in Sources */,
+
 				D891134D2AAC34DC00B5E4F5 /* BBAnimationManager.swift in Sources */,
 				D851F80A2ABA29A0003FCA79 /* BBNavigationView.swift in Sources */,
 				D8D9E5B32A7DFF3E00E295FA /* BBMenuView.swift in Sources */,
@@ -396,9 +402,11 @@
 				D8D9E5AF2A7DF68C00E295FA /* BBBatteryManager.swift in Sources */,
 				D8D9E5A02A7DE7AB00E295FA /* BatteryBoiApp.swift in Sources */,
 				D8CDA8002AA250B500FAD41E /* BBTriggerManager.swift in Sources */,
-				D8F2671E2AB00558003A6420 /* SMC.swift in Sources */,
+
 				D83CD7452AA8F693004223D7 /* BBBluetoothView.swift in Sources */,
+				D83CD79A2AA8F693004223D9 /* BatteryHeroView.swift in Sources */,
 				D8D9E5B92A80646E00E295FA /* BBExtensions.swift in Sources */,
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,7 +491,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -540,7 +548,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-DMACOS_13_AND_ABOVE";
@@ -575,12 +583,12 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 2.4.1;
 				OLDER_MACOS = "";
 				OTHER_SWIFT_FLAGS = "-DMACOS_13_AND_ABOVE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ovatar.batteryapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = BeteriApp;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -611,12 +619,12 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 2.4.1;
 				OLDER_MACOS = "";
 				OTHER_SWIFT_FLAGS = "-DMACOS_13_AND_ABOVE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ovatar.batteryapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = BeteriApp;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};

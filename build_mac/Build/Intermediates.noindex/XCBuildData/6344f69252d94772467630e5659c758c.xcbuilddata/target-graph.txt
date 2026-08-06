@@ -1,0 +1,23 @@
+Target dependency graph (11 targets)
+Target 'BatteryBoi' in project 'BatteryBoi'
+➜ Explicit dependency on target 'Sparkle' in project 'Sparkle'
+➜ Explicit dependency on target 'DynamicColor' in project 'DynamicColor'
+➜ Explicit dependency on target 'FluidGradient' in project 'FluidGradient'
+➜ Explicit dependency on target 'EnalogSwift' in project 'EnalogSwift'
+➜ Explicit dependency on target 'KeyboardShortcuts' in project 'KeyboardShortcuts'
+Target 'KeyboardShortcuts' in project 'KeyboardShortcuts'
+➜ Explicit dependency on target 'KeyboardShortcuts' in project 'KeyboardShortcuts'
+➜ Explicit dependency on target 'KeyboardShortcuts_KeyboardShortcuts' in project 'KeyboardShortcuts'
+Target 'KeyboardShortcuts' in project 'KeyboardShortcuts'
+➜ Explicit dependency on target 'KeyboardShortcuts_KeyboardShortcuts' in project 'KeyboardShortcuts'
+Target 'KeyboardShortcuts_KeyboardShortcuts' in project 'KeyboardShortcuts' (no dependencies)
+Target 'EnalogSwift' in project 'EnalogSwift'
+➜ Explicit dependency on target 'EnalogSwift' in project 'EnalogSwift'
+Target 'EnalogSwift' in project 'EnalogSwift' (no dependencies)
+Target 'FluidGradient' in project 'FluidGradient'
+➜ Explicit dependency on target 'FluidGradient' in project 'FluidGradient'
+Target 'FluidGradient' in project 'FluidGradient' (no dependencies)
+Target 'DynamicColor' in project 'DynamicColor'
+➜ Explicit dependency on target 'DynamicColor' in project 'DynamicColor'
+Target 'DynamicColor' in project 'DynamicColor' (no dependencies)
+Target 'Sparkle' in project 'Sparkle' (no dependencies)

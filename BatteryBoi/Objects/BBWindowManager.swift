@@ -29,28 +29,7 @@ struct WindowViewBlur: NSViewRepresentable {
     
 }
 
-enum WindowPosition:String {
-    case center
-    case topLeft
-    case topMiddle
-    case topRight
-    case bottomLeft
-    case bottomRight
-    
-    var alignment:Alignment {
-        switch self {
-            case .center:return .center
-            case .topLeft:return .topLeading
-            case .topMiddle:return .top
-            case .topRight:return .topTrailing
-            case .bottomLeft:return .bottomLeading
-            case .bottomRight:return .bottomTrailing
-        
-        }
-        
-    }
-    
-}
+
 
 class WindowManager: ObservableObject {
     static var shared = WindowManager()
@@ -67,94 +46,11 @@ class WindowManager: ObservableObject {
     
     @Published public var hover: Bool = false
     @Published public var state: HUDState = .hidden
-    @Published public var position: WindowPosition = .topMiddle
     @Published public var opacity: CGFloat = 1.0
+    @Published var showSettings: Bool = false
 
     init() {
-        BatteryManager.shared.$charging.dropFirst().removeDuplicates().sink { charging in
-            switch charging.state {
-                case .battery : self.windowOpen(.chargingStopped, device: nil)
-                case .charging : self.windowOpen(.chargingBegan, device: nil)
-                
-            }
-            
-        }.store(in: &updates)
-        
-        BatteryManager.shared.$percentage.dropFirst().removeDuplicates().sink { percent in
-            if BatteryManager.shared.charging.state == .battery {
-                // Custom minimum threshold alert
-                let minTh = SettingsManager.shared.minChargeThreshold
-                if minTh != .disabled && percent == Double(minTh.rawValue) {
-                    self.windowOpen(.percentMinThreshold, device: nil)
-                }
-                else {
-                    switch percent {
-                        case 25 : self.windowOpen(.percentTwentyFive, device: nil)
-                        case 10 : self.windowOpen(.percentTen, device: nil)
-                        case 5 : self.windowOpen(.percentFive, device: nil)
-                        case 1 : self.windowOpen(.percentOne, device: nil)
-                        default : break
 
-                    }
-                }
-
-            }
-            else {
-                // Custom maximum threshold alert
-                let maxTh = SettingsManager.shared.maxChargeThreshold
-                if maxTh != .disabled && percent == Double(maxTh.rawValue) {
-                    self.windowOpen(.percentMaxThreshold, device: nil)
-                }
-                else if percent == 100 && SettingsManager.shared.enabledChargeEighty == .disabled {
-                    self.windowOpen(.chargingComplete, device: nil)
-                }
-                else if percent == 80 && SettingsManager.shared.enabledChargeEighty == .enabled {
-                    self.windowOpen(.chargingComplete, device: nil)
-                }
-
-            }
-            
-        }.store(in: &updates)
-        
-        BatteryManager.shared.$thermal.dropFirst().removeDuplicates().sink { state in
-            if state == .suboptimal {
-                self.windowOpen(.deviceOverheating, device: nil)
-
-            }
-            
-        }.store(in: &updates)
-
-//        BluetoothManager.shared.$connected.removeDuplicates().dropFirst(1).receive(on: DispatchQueue.main).sink() { items in
-//            if let latest = items.sorted(by: { $0.updated > $1.updated }).first {
-//                if latest.updated.now == true {
-//                    switch latest.connected {
-//                        case .connected : self.windowOpen(.deviceConnected, device: latest)
-//                        default : break //self.windowOpen(.deviceRemoved, device: latest)
-//
-//                    }
-//
-//                }
-//
-//            }
-//
-//        }.store(in: &updates)
-
-        AppManager.shared.appTimer(60).dropFirst().receive(on: DispatchQueue.main).sink { _ in
-            let connected = BluetoothManager.shared.list.filter({ $0.connected == .connected })
-
-            for device in connected {
-                switch device.battery.general {
-                    case 25 : self.windowOpen(.percentTwentyFive, device: device)
-                    case 10 : self.windowOpen(.percentTen, device: device)
-                    case 5 : self.windowOpen(.percentFive, device: device)
-                    case 1 : self.windowOpen(.percentOne, device: device)
-                    default : break
-                    
-                }
-
-            }
-
-        }.store(in: &updates)
         
         AppManager.shared.$alert.removeDuplicates().delay(for: .seconds(5.0), scheduler: RunLoop.main).sink { type in
             if AppManager.shared.alert?.timeout == true && self.state == .revealed {
@@ -172,23 +68,7 @@ class WindowManager: ObservableObject {
 
         }.store(in: &updates)
         
-        AppManager.shared.appTimer(30).dropFirst().sink { _ in
-            if BatteryManager.shared.charging.state == .battery {
-                if let now = EventManager.shared.events.sorted(by: { $0.start > $1.start }).first {
-                    if let minutes = Calendar.current.dateComponents([.minute], from: Date(), to: now.start).minute {                        
-                        switch minutes {
-                            case 2 : self.windowOpen(.userEvent, device: nil)
-                            default : break
 
-                        }
- 
-                    }
-                    
-                }
-         
-            }
-            
-        }.store(in: &updates)
                 
         SettingsManager.shared.$pinned.sink { pinned in
             if pinned == .enabled {
@@ -202,14 +82,7 @@ class WindowManager: ObservableObject {
         }.store(in: &updates)
 
         NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseUp, .rightMouseUp]) { event in
-            if NSRunningApplication.current == NSWorkspace.shared.frontmostApplication {
-                if self.state == .revealed || self.state == .progress {
-                    self.windowSetState(.detailed)
-                    
-                }
-                
-            }
-            else {
+            if NSRunningApplication.current != NSWorkspace.shared.frontmostApplication {
                 if SettingsManager.shared.enabledPinned == .disabled {
                     if self.state.visible == true {
                         self.windowSetState(.dismissed)
@@ -242,17 +115,11 @@ class WindowManager: ObservableObject {
                 
             }
             else if state == .revealed && AppManager.shared.alert?.timeout == false {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    self.windowSetState(.detailed)
-                    
-                }
-                
+                // Do not automatically transition to .detailed. Let it stay as a round pop-up.
             }
             
 
         }.store(in: &updates)
-        
-        self.position = self.windowLastPosition
         
     }
     
@@ -268,16 +135,7 @@ class WindowManager: ObservableObject {
     }
     
     public func windowIsVisible(_ type:HUDAlertTypes) -> Bool {
-        if let window = self.windowExists(type) {
-            if CGFloat(window.alphaValue) > 0.5 {
-                return true
-                
-            }
-            
-        }
-        
-        return false
-        
+        return self.state.visible || self.state == .progress
     }
     
     public func windowOpen(_ type:HUDAlertTypes, device:BluetoothObject?) {
@@ -334,7 +192,7 @@ class WindowManager: ObservableObject {
     private func windowDefault(_ type:HUDAlertTypes) -> NSWindow? {
         var window:NSWindow?
         window = NSWindow()
-        window?.styleMask = [.borderless, .miniaturizable]
+        window?.styleMask = [.borderless, .miniaturizable, .resizable]
         window?.level = .statusBar
         window?.contentView?.translatesAutoresizingMaskIntoConstraints = false
         window?.center()
@@ -366,111 +224,52 @@ class WindowManager: ObservableObject {
     }
     
     public func windowHandleFrame(moved: NSRect? = nil) -> NSRect {
-        let windowWidth = self.screen.width / 3
-        let windowHeight = self.screen.height / 2
-        let windowMargin: CGFloat = 40
+        var rect = windowLastRect
         
-        let positionDefault = CGSize(width: 420, height: 220)
-        
-        if triggered > 5 {
-            if let moved = moved {
-                _ = self.calculateWindowLastPosition(moved: moved, windowHeight: windowHeight, windowWidth: windowWidth, windowMargin: windowMargin)
-                
-                return NSMakeRect(moved.origin.x, moved.origin.y, moved.width, moved.height)
-                
-            }
-            
-        }
-        else {
+        if let moved = moved, triggered > 5 {
+            rect = moved
+        } else {
             self.triggered += 1
-            
         }
         
-        return calculateInitialPosition(mode: windowLastPosition, defaultSize: positionDefault, windowMargin: windowMargin)
+        let screenBounds = NSScreen.main?.visibleFrame ?? NSRect(x: 0, y: 0, width: self.screen.width, height: self.screen.height)
         
+        if rect.width < 150 { rect.size.width = 150 }
+        if rect.height < 150 { rect.size.height = 150 }
+        
+        if rect.origin.x < screenBounds.minX {
+            rect.origin.x = screenBounds.minX
+        } else if rect.maxX > screenBounds.maxX {
+            rect.origin.x = screenBounds.maxX - rect.width
+        }
+        
+        if rect.origin.y < screenBounds.minY {
+            rect.origin.y = screenBounds.minY
+        } else if rect.maxY > screenBounds.maxY {
+            rect.origin.y = screenBounds.maxY - rect.height
+        }
+        
+        if moved != nil && triggered > 5 {
+            self.windowLastRect = rect
+        }
+        
+        return rect
     }
     
-    private var windowLastPosition:WindowPosition {
+    private var windowLastRect: NSRect {
         get {
-            if let position = UserDefaults.main.object(forKey: SystemDefaultsKeys.batteryWindowPosition.rawValue) as? String {
-                withAnimation(.interactiveSpring(response: 0.4, dampingFraction: 0.7, blendDuration:  0.5)) {
-                    self.position = WindowPosition(rawValue: position) ?? .topMiddle
-                    
-                }
-
+            if let str = UserDefaults.main.string(forKey: "sd_window_rect") {
+                return NSRectFromString(str)
             }
-
-            return self.position
-
+            let windowMargin: CGFloat = 40
+            let positionDefault = CGSize(width: 480, height: 420)
+            let positionLeft = (self.screen.width / 2) - (positionDefault.width / 2)
+            let positionTop = self.screen.height - (positionDefault.height + windowMargin)
+            return NSMakeRect(positionLeft, positionTop, positionDefault.width, positionDefault.height)
         }
-        
         set {
-            UserDefaults.save(.batteryWindowPosition, value: newValue.rawValue)
-           
+            UserDefaults.main.set(NSStringFromRect(newValue), forKey: "sd_window_rect")
         }
-                
-    }
-
-    private func calculateWindowLastPosition(moved: NSRect, windowHeight: CGFloat, windowWidth: CGFloat, windowMargin: CGFloat) -> WindowPosition {
-        var positionTop: CGFloat
-        var positionMode: WindowPosition
-        
-        if moved.midY > windowHeight {
-            positionTop = self.screen.height - windowMargin
-            
-        } 
-        else {
-            positionTop = windowMargin
-            
-        }
-        
-        if moved.midX < windowWidth {
-            positionMode = (positionTop == windowMargin) ? .bottomLeft : .topLeft
-            
-        } 
-        else if moved.midX > windowWidth && moved.midX < (windowWidth * 2) {
-            positionMode = (positionTop == windowMargin) ? .center : .topMiddle
-            
-        } 
-        else if moved.midX > (windowWidth * 2) {
-            positionMode = (positionTop == windowMargin) ? .bottomRight : .topRight
-            
-        } 
-        else {
-            positionMode = .center
-            
-        }
-        
-        self.windowLastPosition = positionMode
-        
-        return positionMode
-        
-    }
-
-    private func calculateInitialPosition(mode: WindowPosition, defaultSize: CGSize, windowMargin: CGFloat) -> NSRect {
-        var positionLeft: CGFloat = windowMargin
-        var positionTop: CGFloat = windowMargin
-        
-        switch mode {
-        case .center:
-            positionLeft = (self.screen.width / 2) - (defaultSize.width / 2)
-            positionTop = (self.screen.height / 2) - (defaultSize.height / 2)
-            
-        case .topLeft, .bottomLeft:
-            positionLeft = windowMargin
-            positionTop = (mode == .topLeft) ? self.screen.height - (defaultSize.height + windowMargin) : windowMargin
-            
-        case .topMiddle:
-            positionLeft = (self.screen.width / 2) - (defaultSize.width / 2)
-            positionTop = self.screen.height - (defaultSize.height + windowMargin)
-            
-        case .topRight, .bottomRight:
-            positionLeft = self.screen.width - (defaultSize.width + windowMargin)
-            positionTop = (mode == .topRight) ? self.screen.height - (defaultSize.height + windowMargin) : windowMargin
-        }
-        
-        return NSMakeRect(positionLeft, positionTop, defaultSize.width, defaultSize.height)
-        
     }
 
 }

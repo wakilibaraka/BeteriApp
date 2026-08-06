@@ -1,0 +1,56 @@
+{
+  "source": "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/BatteryBoi/Views/Window/BBHUDView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "BeteriApp",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 520
+        }
+      },
+      {
+        "comment": "",
+        "key": "macOS System Utility",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 523
+        }
+      },
+      {
+        "comment": "",
+        "key": "Advanced Settings",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 545
+        }
+      },
+      {
+        "comment": "",
+        "key": "Quit BeteriApp",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 559
+        }
+      },
+      {
+        "comment": "",
+        "key": "Connected Devices",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 585
+        }
+      },
+      {
+        "comment": "",
+        "key": "No Connected Devices",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 606
+        }
+      }
+    ]
+  },
+  "version": 1
+}

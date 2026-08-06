@@ -192,10 +192,10 @@ struct RadialProgressContainer: View {
     var body: some View {
         ZStack {
             Circle()
-                .stroke(Color("BatterySubtitle").opacity(0.08), style: StrokeStyle(lineWidth: 16, lineCap: .round))
+                .stroke(Color("BatterySubtitle").opacity(0.08), style: StrokeStyle(lineWidth: 8, lineCap: .round))
                 .padding(5)
             
-            RadialProgressBar($progress, size: .init(width: 80, height: 80), style: .constant(.colour))
+            RadialProgressBar($progress, size: .init(width: 80, height: 80), line: 8, style: .constant(.colour))
 
             ZStack(alignment: .center) {
                 Text("\(self.percent ?? 0)")

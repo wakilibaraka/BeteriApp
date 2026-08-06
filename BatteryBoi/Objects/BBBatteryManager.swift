@@ -300,11 +300,49 @@ class BatteryManager:ObservableObject {
     
     private func powerStatus(_ force:Bool = false) {
         if force == true {
+            let oldPercentage = self.percentage
             self.percentage = self.powerPercentage
 
             if self.powerCharging != self.charging.state {
-                self.charging = .init(self.powerCharging)
+                let newState = self.powerCharging
+                self.charging = .init(newState)
                 
+                DispatchQueue.main.async {
+                    if newState == .charging {
+                        WindowManager.shared.windowOpen(.chargingBegan, device: nil)
+                    } else {
+                        WindowManager.shared.windowOpen(.chargingStopped, device: nil)
+                    }
+                }
+            }
+            
+            if oldPercentage != self.percentage {
+                DispatchQueue.main.async {
+                    if self.charging.state == .battery {
+                        if oldPercentage > 25.0 && self.percentage <= 25.0 {
+                            WindowManager.shared.windowOpen(.percentTwentyFive, device: nil)
+                        } else if oldPercentage > 10.0 && self.percentage <= 10.0 {
+                            WindowManager.shared.windowOpen(.percentTen, device: nil)
+                        } else if oldPercentage > 5.0 && self.percentage <= 5.0 {
+                            WindowManager.shared.windowOpen(.percentFive, device: nil)
+                        } else if oldPercentage > 1.0 && self.percentage <= 1.0 {
+                            WindowManager.shared.windowOpen(.percentOne, device: nil)
+                        }
+                        
+                        let minThresh = Double(SettingsManager.shared.enabledMinThreshold.rawValue)
+                        if oldPercentage > minThresh && self.percentage <= minThresh {
+                            WindowManager.shared.windowOpen(.percentMinThreshold, device: nil)
+                        }
+                    } else if self.charging.state == .charging {
+                        let maxThresh = Double(SettingsManager.shared.enabledMaxThreshold.rawValue)
+                        if oldPercentage < maxThresh && self.percentage >= maxThresh {
+                            WindowManager.shared.windowOpen(.percentMaxThreshold, device: nil)
+                        }
+                        if oldPercentage < 100.0 && self.percentage >= 100.0 {
+                            WindowManager.shared.windowOpen(.chargingComplete, device: nil)
+                        }
+                    }
+                }
             }
             
         }
@@ -342,100 +380,68 @@ class BatteryManager:ObservableObject {
         
     }
     
-    private var powerRemaing:BatteryRemaining? {
-        let process = Process()
-        process.launchPath = "/bin/sh"
-        process.arguments = ["-c", "pmset -g batt | grep -o '[0-9]\\{1,2\\}:[0-9]\\{2\\}'"]
-        
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        process.launch()
-        
-        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        
-        if let output = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: ":") {
-            if let hour = output.map({ Int($0)}).first, let min = output.map({ Int($0)}).last {
-                if let hour = hour, let minute = min {
-                    self.powerDepetionAverage =  (Double(hour) * 60.0 * 60.0) + (Double(minute) * 60.0)
-
-                    return .init(hour: hour, minute: minute)
-
+    public var powerIsCharging: Bool {
+        let snapshot = IOPSCopyPowerSourcesInfo().takeRetainedValue()
+        let sources = IOPSCopyPowerSourcesList(snapshot).takeRetainedValue() as Array
+        for source in sources {
+            if let description = IOPSGetPowerSourceDescription(snapshot, source).takeUnretainedValue() as? [String: Any] {
+                if description[kIOPSTypeKey] as? String == kIOPSInternalBatteryType {
+                    let isCharging = description[kIOPSIsChargingKey] as? Int ?? 0
+                    return isCharging == 1
                 }
-                else if let rate = self.powerDepetionAverage {
-                    let date = Date().addingTimeInterval(rate * self.percentage)
-                    let components = Calendar.current.dateComponents([.hour, .minute], from: Date(), to: date)
-                    
-                    return .init(hour: components.hour ?? 0, minute: components.minute ?? 0)
-
-                }
-                
-                return .init(hour: 0, minute: 0)
-                
             }
-
         }
-        
+        return false
+    }
+    
+    public var powerIsCalculating: Bool {
+        let snapshot = IOPSCopyPowerSourcesInfo().takeRetainedValue()
+        let sources = IOPSCopyPowerSourcesList(snapshot).takeRetainedValue() as Array
+        for source in sources {
+            if let description = IOPSGetPowerSourceDescription(snapshot, source).takeUnretainedValue() as? [String: Any] {
+                if description[kIOPSTypeKey] as? String == kIOPSInternalBatteryType {
+                    let timeE = description[kIOPSTimeToEmptyKey] as? Int ?? 0
+                    let timeF = description[kIOPSTimeToFullChargeKey] as? Int ?? 0
+                    return timeE == 65535 || timeE == -1 || timeF == 65535 || timeF == -1
+                }
+            }
+        }
+        return false
+    }
+    
+    private var powerRemaing:BatteryRemaining? {
+        let snapshot = IOPSCopyPowerSourcesInfo().takeRetainedValue()
+        let sources = IOPSCopyPowerSourcesList(snapshot).takeRetainedValue() as Array
+        for source in sources {
+            if let description = IOPSGetPowerSourceDescription(snapshot, source).takeUnretainedValue() as? [String: Any] {
+                if description[kIOPSTypeKey] as? String == kIOPSInternalBatteryType {
+                    if let time = description[kIOPSTimeToEmptyKey] as? Int, time > 0, time != 65535 {
+                        return .init(hour: time / 60, minute: time % 60)
+                    }
+                }
+            }
+        }
         return nil
-        
     }
     
     public var powerUntilFull:Date? {
-        var seconds = 180.0
-        let remainder = 100 - self.percentage
-
-        if self.charging.state == .charging {
-            if let exists = self.rate {
-                if self.percentage > exists.percent {
-                    seconds = Date().timeIntervalSince(exists.timestamp)
-
-                    UserDefaults.save(.batteryUntilFull, value: seconds)
-                    
+        let snapshot = IOPSCopyPowerSourcesInfo().takeRetainedValue()
+        let sources = IOPSCopyPowerSourcesList(snapshot).takeRetainedValue() as Array
+        for source in sources {
+            if let description = IOPSGetPowerSourceDescription(snapshot, source).takeUnretainedValue() as? [String: Any] {
+                if description[kIOPSTypeKey] as? String == kIOPSInternalBatteryType {
+                    if let time = description[kIOPSTimeToFullChargeKey] as? Int, time > 0, time != 65535 {
+                        return Date(timeIntervalSinceNow: Double(time * 60))
+                    }
                 }
-                
             }
-            
-            self.rate = .init(percentage)
-
         }
-        
-        return Date(timeIntervalSinceNow: Double(seconds) * Double(remainder))
-
+        return nil
     }
     
     private var powerDepetionAverage:Double? {
-        get {
-            if let averages = UserDefaults.main.object(forKey: SystemDefaultsKeys.batteryDepletionRate.rawValue) as? Array<Double> {
-                
-                if averages.count > 0 {
-                    return averages.reduce(0.0, +) / Double(averages.count)
-
-                }
-                
-            }
-            
-            return nil
-            
-        }
-        
-        set {
-            if let seconds = newValue {
-                let averages = UserDefaults.main.object(forKey: SystemDefaultsKeys.batteryDepletionRate.rawValue) as? Array<Double> ?? Array<Double>()
-                
-                if averages.contains(seconds / self.percentage) == false && self.charging.state == .battery {
-                    if (seconds / self.percentage) > 0.0 {
-                        var list = Array(averages.suffix(15))
-                        list.append(seconds / self.percentage)
-                        
-                        UserDefaults.save(.batteryDepletionRate, value: list)
-                        
-                    }
-
-                }
-                
-            }
-
-        }
-        
+        get { return nil }
+        set { }
     }
     
     private var powerSaveModeStatus:BatteryModeType {
@@ -508,8 +514,12 @@ class BatteryManager:ObservableObject {
                 let value = Int(output[match].components(separatedBy: CharacterSet.decimalDigits.inverted).joined()) ?? 0
                 
                 if value < 100 {
+                    if self.thermal != .suboptimal {
+                        DispatchQueue.main.async {
+                            WindowManager.shared.windowOpen(.deviceOverheating, device: nil)
+                        }
+                    }
                     self.thermal = .suboptimal
-
                 }
 
             }
@@ -518,8 +528,12 @@ class BatteryManager:ObservableObject {
                 let value = Int(output[match].components(separatedBy: CharacterSet.decimalDigits.inverted).joined()) ?? 0
                 
                 if value < cores {
+                    if self.thermal != .suboptimal {
+                        DispatchQueue.main.async {
+                            WindowManager.shared.windowOpen(.deviceOverheating, device: nil)
+                        }
+                    }
                     self.thermal = .suboptimal
-
                 }
 
             }
@@ -528,8 +542,12 @@ class BatteryManager:ObservableObject {
                 let value = Int(output[match].components(separatedBy: CharacterSet.decimalDigits.inverted).joined()) ?? 0
                 
                 if value < 100 {
+                    if self.thermal != .suboptimal {
+                        DispatchQueue.main.async {
+                            WindowManager.shared.windowOpen(.deviceOverheating, device: nil)
+                        }
+                    }
                     self.thermal = .suboptimal
-
                 }
 
             }
@@ -640,34 +658,71 @@ class BatteryManager:ObservableObject {
         
     }
 
-    
-    
-//    func setSMCByte(key: String, value: UInt8) {
-//           do {
-//               try SMCKit.open()
-//           } catch {
-//               print(error)
-//               exit(EX_UNAVAILABLE)
-//           }
-//           let smcKey = SMCKit.getKey(key, type: DataTypes.UInt8)
-//           let bytes: SMCBytes = (value, UInt8(0), UInt8(0), UInt8(0), UInt8(0), UInt8(0),
-//           UInt8(0), UInt8(0), UInt8(0), UInt8(0), UInt8(0), UInt8(0),
-//           UInt8(0), UInt8(0), UInt8(0), UInt8(0), UInt8(0), UInt8(0),
-//           UInt8(0), UInt8(0), UInt8(0), UInt8(0), UInt8(0), UInt8(0),
-//           UInt8(0), UInt8(0), UInt8(0), UInt8(0), UInt8(0), UInt8(0),
-//           UInt8(0), UInt8(0))
-//           
-//           if(self.modifiedKeys[key] == nil){
-//               readSMCByte(key: key) { (originalValue) in
-//                   self.modifiedKeys[key] = originalValue
-//                   _ = try? SMCKit.writeData(smcKey, data: bytes)
-//               }
-//           }
-//           else{
-//               _ = try? SMCKit.writeData(smcKey, data: bytes)
-//           }
-//
-//           
-//       }
-    
+    public var currentPowerDraw: Double {
+        let service = IOServiceGetMatchingService(0, IOServiceNameMatching("AppleSmartBattery"))
+        defer {
+            if service != 0 {
+                IOObjectRelease(service)
+            }
+        }
+        if service != 0 {
+            let ampObj = IORegistryEntryCreateCFProperty(service, "InstantAmperage" as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue()
+            let voltObj = IORegistryEntryCreateCFProperty(service, "Voltage" as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue()
+            
+            var amperage: Double = 0.0
+            if let ampInt = ampObj as? Int {
+                amperage = Double(ampInt)
+            } else if let ampInt64 = ampObj as? Int64 {
+                amperage = Double(ampInt64)
+            } else if let ampDouble = ampObj as? Double {
+                amperage = ampDouble
+            }
+            
+            if amperage > 1_000_000_000 {
+                amperage = amperage - 18446744073709551616.0
+            }
+            
+            var voltage: Double = 0.0
+            if let voltInt = voltObj as? Int {
+                voltage = Double(voltInt)
+            } else if let voltInt64 = voltObj as? Int64 {
+                voltage = Double(voltInt64)
+            } else if let voltDouble = voltObj as? Double {
+                voltage = voltDouble
+            }
+            
+            return abs(amperage * voltage) / 1_000_000.0
+        }
+        return 0.0
+    }
+
+    // MARK: - Battery Temperature & Health (IORegistry)
+
+    /// Battery temperature in degrees Celsius from IORegistry.
+    public var batteryTemperature: Double {
+        let service = IOServiceGetMatchingService(0, IOServiceNameMatching("AppleSmartBattery"))
+        defer { if service != 0 { IOObjectRelease(service) } }
+        guard service != 0 else { return 0.0 }
+        if let tempObj = IORegistryEntryCreateCFProperty(service, "Temperature" as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue() as? Int {
+            // Temperature is reported in tenths of degrees Kelvin; convert to Celsius.
+            return (Double(tempObj) / 10.0) - 273.15
+        }
+        return 0.0
+    }
+
+    /// Battery health as a percentage of design capacity (0–100).
+    public var batteryHealthPercent: Double {
+        let service = IOServiceGetMatchingService(0, IOServiceNameMatching("AppleSmartBattery"))
+        defer { if service != 0 { IOObjectRelease(service) } }
+        guard service != 0 else { return 100.0 }
+        let maxObj = IORegistryEntryCreateCFProperty(service, "AppleRawMaxCapacity" as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue()
+        let designObj = IORegistryEntryCreateCFProperty(service, "DesignCapacity" as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue()
+        if let maxCap = maxObj as? Int, let designCap = designObj as? Int, designCap > 0 {
+            return min(100.0, (Double(maxCap) / Double(designCap)) * 100.0)
+        }
+        return 100.0
+    }
+
+
+
 }
