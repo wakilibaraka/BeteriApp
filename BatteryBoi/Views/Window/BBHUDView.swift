@@ -24,6 +24,7 @@ enum HUDAlertTypes:Int {
     case deviceConnected
     case deviceRemoved
     case deviceDistance
+    case userSettings
 
     var sfx:SystemSoundEffects? {
         switch self {
@@ -38,6 +39,7 @@ enum HUDAlertTypes:Int {
             case .percentMaxThreshold: return .high
             case .userLaunched : return nil
             case .userInitiated : return nil
+            case .userSettings : return nil
             case .userEvent : return .low
             case .deviceOverheating : return .low
             case .deviceRemoved : return .low
@@ -63,12 +65,9 @@ enum HUDAlertTypes:Int {
     
     var timeout:Bool {
         switch self {
-            case .userLaunched : return false
-            case .userInitiated : return false
+            case .userLaunched, .userInitiated, .userSettings : return false
             default : return true
-            
         }
-        
     }
     
 }
@@ -96,22 +95,21 @@ enum HUDState:Equatable {
         
     }
     
-    var mask:AnimationObject? {
+    func mask(showSettings: Bool = false) -> AnimationObject? {
         if self == .revealed {
+            // Smooth single step to pill (no circle bulge)
             return .init([
-                .init(0.6, delay: 0.2, easing: .bounce, width: 100, height: 100, blur: 0, radius: 50),
-                .init(0.8, easing: .bounce, width: 380, height: 100, blur: 0, radius: 50)], id: "initial")
+                .init(0.5, easing: .bounce, width: 380, height: 100, blur: 0, radius: 50)], id: "initial")
             
         }
         else if self == .detailed {
-            return .init([.init(0.0, easing: .bounce, width: 480, height: 420, radius: 16)], id:"expand_out")
+            return .init([.init(0.5, easing: .bounce, width: 480, height: showSettings ? 650 : 270, radius: 16)], id:"expand_out")
             
         }
         else if self == .dismissed {
+            // Snappy collapse straight to vanishing
             return .init([
-                .init(0.3, easing: .bounce, width: 380, height: 100, radius: 50),
-                .init(0.3, easing: .easeout, width: 100, height: 100, radius: 50),
-                .init(0.3, delay: 0.4, easing: .bounce, width: 20, height: 20, opacity: 0, radius: 50)], id: "expand_close")
+                .init(0.3, easing: .easeout, width: 60, height: 60, opacity: 0, radius: 30)], id: "expand_close")
 
         }
         
@@ -141,13 +139,14 @@ enum HUDState:Equatable {
     
     var progress:AnimationObject? {
         if self == .revealed {
+            // Content fades in shortly after pill has expanded
             return .init([
-                .init(0.2, easing: .bounce, opacity: 0.0, blur:0.0, scale: 0.8),
-                .init(0.4, delay: 0.4, easing: .easeout, opacity: 1.0, scale:1.0)])
+                .init(0.01, easing: .linear, opacity: 0.0, scale: 0.85),
+                .init(0.3, delay: 0.5, easing: .easeout, opacity: 1.0, scale: 1.0)])
             
         }
         else if self == .dismissed {
-            return .init([.init(0.6, easing: .bounce, opacity: 0.0, blur:12.0, scale: 0.9)])
+            return .init([.init(0.3, easing: .easeout, opacity: 0.0, blur: 4.0, scale: 0.9)])
             
         }
 
@@ -161,7 +160,7 @@ enum HUDState:Equatable {
             
         }
         else if self == .dismissed {
-            return .init([.init(0.6, delay: 0.2, easing: .easeout, opacity: 0.0, blur: 5.0)])
+            return .init([.init(0.3, easing: .easeout, opacity: 0.0, blur: 3.0)])
 
         }
         
@@ -208,11 +207,60 @@ struct HUDIcon: View {
     
 }
 
+struct ActiveConnectionsView: View {
+    @EnvironmentObject var bluetooth: BluetoothManager
+    
+    var body: some View {
+        HStack(spacing: -6) {
+            let connected = bluetooth.list.filter { $0.connected == .connected && $0.type.icon != "" }
+            
+            ForEach(connected.prefix(4), id: \.address) { device in
+                ZStack {
+                    Circle()
+                        .fill(Color("BatteryBackground"))
+                        .opacity(0.8)
+                    
+                    Circle()
+                        .strokeBorder(Color.white.opacity(0.1), lineWidth: 1)
+                        
+                    Image(systemName: device.type.icon)
+                        .font(.system(size: 10, weight: .bold))
+                        .foregroundColor(Color("BatterySubtitle"))
+                }
+                .frame(width: 24, height: 24)
+                .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 1)
+                // Add a small hover scale effect
+                .scaleEffect(1.0)
+                .animation(.spring(), value: connected)
+            }
+            
+            if connected.count > 4 {
+                ZStack {
+                    Circle()
+                        .fill(Color("BatteryBackground"))
+                        .opacity(0.8)
+                    
+                    Circle()
+                        .strokeBorder(Color.white.opacity(0.1), lineWidth: 1)
+                        
+                    Text("+\(connected.count - 4)")
+                        .font(.system(size: 10, weight: .bold))
+                        .foregroundColor(Color("BatterySubtitle"))
+                }
+                .frame(width: 24, height: 24)
+                .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 1)
+            }
+        }
+        .padding(.trailing, 8)
+    }
+}
+
 
 struct HUDSummary: View {
     @EnvironmentObject var stats:StatsManager
     @EnvironmentObject var updates:UpdateManager
     @EnvironmentObject var window:WindowManager
+    @EnvironmentObject var bluetooth:BluetoothManager
 
     @State private var title = ""
     @State private var subtitle = ""
@@ -240,6 +288,10 @@ struct HUDSummary: View {
             
             Spacer()
             
+            if self.title != "" {
+                ActiveConnectionsView()
+            }
+            
         }
         .blur(radius: self.visible ? 0.0 : 4.0)
         .opacity(self.visible ? 1.0 : 0.0)
@@ -258,7 +310,7 @@ struct HUDSummary: View {
 
         }
         .onChange(of: window.state, perform: { newValue in
-            withAnimation(Animation.easeOut(duration: 0.6).delay(self.visible == false ? 0.8 : 0.0)) {
+            withAnimation(Animation.easeOut(duration: 0.35).delay(self.visible == false ? 0.5 : 0.0)) {
                 self.visible = newValue.visible
 
             }
@@ -277,25 +329,16 @@ struct HUDContainer: View {
     @State private var timeline:AnimationObject
     @State private var namespace:Namespace.ID
     @State private var animation:AnimationState = .waiting
-    
-    @Binding private var progress:HUDProgressLayout
 
-    init(animation:Namespace.ID, progress:Binding<HUDProgressLayout>) {
+    init(animation:Namespace.ID) {
         self._namespace = State(initialValue: animation)
         self._timeline = State(initialValue: .init([]))
-        self._progress = progress
-
     }
     
     var body: some View {
         HStack(alignment: .center) {
             HUDSummary()
-
-            if self.progress == .trailing {
-                HUDProgress().matchedGeometryEffect(id: "progress", in: self.namespace)
-                
-            }
-            
+            HUDProgress().matchedGeometryEffect(id: "progress", in: self.namespace)
         }
         .timeline($timeline ,state: $animation)
         .padding(.leading, 4)
@@ -310,17 +353,7 @@ struct HUDContainer: View {
         .onChange(of: window.state, perform: { newValue in
             if let animation = newValue.container {
                 self.timeline = animation
-                
             }
-            
-            if newValue == .revealed {
-                withAnimation(Animation.easeOut(duration: 0.8).delay(0.8)) {
-                    self.progress = .trailing
-                }
-            } else if newValue == .progress || newValue == .hidden {
-                self.progress = .center
-            }
-          
         })
         
     }
@@ -348,18 +381,23 @@ struct HUDMaskView: View {
             
         }
         .onAppear() {
-            if let animation = window.state.mask {
+            if let animation = window.state.mask(showSettings: window.showSettings) {
                 self.timeline = animation
                 
             }
           
         }
         .onChange(of: window.state, perform: { newValue in
-            if let animation = newValue.mask {
+            if let animation = newValue.mask(showSettings: window.showSettings) {
                 self.timeline = animation
                 
             }
           
+        })
+        .onChange(of: window.showSettings, perform: { newValue in
+            if let animation = window.state.mask(showSettings: newValue) {
+                self.timeline = animation
+            }
         })
         
     }
@@ -441,7 +479,6 @@ struct HUDView: View {
 
     @State private var timeline:AnimationObject
     @State private var animation:AnimationState = .waiting
-    @State private var progress:HUDProgressLayout = .center
 
     @Namespace private var namespace
 
@@ -457,16 +494,12 @@ struct HUDView: View {
             }
             else {
                 VStack {
-                    HUDContainer(animation: namespace, progress: $progress)
+                    HUDContainer(animation: namespace)
                         .matchedGeometryEffect(id: "hud", in: self.namespace)
-                }
-                   
-                if progress == .center {
-                    HUDProgress().matchedGeometryEffect(id: "progress", in: self.namespace)
                 }
             }
         }
-        .frame(width: window.state == .detailed ? 480 : 400, height: window.state == .detailed ? 650 : 200)
+        .frame(width: window.state == .detailed ? 480 : 400, height: window.state == .detailed ? (window.showSettings ? 650 : 270) : 200)
         .background(
             ZStack {
                 if window.state == .detailed {
@@ -479,13 +512,6 @@ struct HUDView: View {
         .timeline($timeline, state: $animation)
         .mask(
             HUDMaskView()
-        )
-        .background(
-            ZStack {
-                if window.state != .detailed {
-                    HUDGlow()
-                }
-            }
         )
         .onHover(perform: { hover in
             self.window.hover = hover
@@ -530,7 +556,7 @@ struct DetailedPanelView: View {
                 HStack(spacing: 8) {
                     // Settings button
                     Button(action: {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        withAnimation(.easeOut(duration: 0.3)) {
                             window.showSettings.toggle()
                         }
                     }) {

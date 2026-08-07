@@ -7,15 +7,7 @@
         "key": "%lld%%",
         "location": {
           "startingColumn": 26,
-          "startingLine": 40
-        }
-      },
-      {
-        "comment": "",
-        "key": "Charging...",
-        "location": {
-          "startingColumn": 26,
-          "startingLine": 105
+          "startingLine": 78
         }
       }
     ]

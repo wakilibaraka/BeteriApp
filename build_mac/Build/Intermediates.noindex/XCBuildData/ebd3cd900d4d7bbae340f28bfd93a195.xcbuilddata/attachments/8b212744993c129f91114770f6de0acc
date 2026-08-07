@@ -1,0 +1,36 @@
+{
+  "" : {
+    "const-values" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradient-primary.swiftconstvalues",
+    "dependencies" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradient-primary.d",
+    "diagnostics" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradient-primary.dia",
+    "emit-module-dependencies" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradient-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradient-primary-emit-module.dia",
+    "pch" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradient-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradient-primary.swiftdeps"
+  },
+  "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/SourcePackages/checkouts/FluidGradient/Sources/FluidGradient/BlobLayer.swift" : {
+    "index-unit-output-path" : "/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/BlobLayer.o",
+    "llvm-bc" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/BlobLayer.bc",
+    "object" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/BlobLayer.o"
+  },
+  "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/SourcePackages/checkouts/FluidGradient/Sources/FluidGradient/CGPoint+Extensions.swift" : {
+    "index-unit-output-path" : "/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/CGPoint+Extensions.o",
+    "llvm-bc" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/CGPoint+Extensions.bc",
+    "object" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/CGPoint+Extensions.o"
+  },
+  "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/SourcePackages/checkouts/FluidGradient/Sources/FluidGradient/FluidGradient.swift" : {
+    "index-unit-output-path" : "/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradient.o",
+    "llvm-bc" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradient.bc",
+    "object" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradient.o"
+  },
+  "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/SourcePackages/checkouts/FluidGradient/Sources/FluidGradient/FluidGradientView.swift" : {
+    "index-unit-output-path" : "/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradientView.o",
+    "llvm-bc" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradientView.bc",
+    "object" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/FluidGradientView.o"
+  },
+  "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/SourcePackages/checkouts/FluidGradient/Sources/FluidGradient/ResizableLayer.swift" : {
+    "index-unit-output-path" : "/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/ResizableLayer.o",
+    "llvm-bc" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/ResizableLayer.bc",
+    "object" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/FluidGradient.build/Release/FluidGradient.build/Objects-normal/arm64/ResizableLayer.o"
+  }
+}

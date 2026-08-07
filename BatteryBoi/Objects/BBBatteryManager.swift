@@ -217,48 +217,43 @@ class BatteryManager:ObservableObject {
 
     private var counter:Int? = 0
     private var updates = Set<AnyCancellable>()
+    private var runLoopSource: CFRunLoopSource?
 
     init() {
-        Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { _ in
-            if self.counter == nil {
-                self.powerUpdaterFallback()
-
+        let context = UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque())
+        let loopSource = IOPSNotificationCreateRunLoopSource({ (context) in
+            if let ctx = context {
+                let manager = Unmanaged<BatteryManager>.fromOpaque(ctx).takeUnretainedValue()
+                manager.powerStatus(true)
+                manager.remaining = manager.powerRemaing
             }
-            
-        }
+        }, context).takeRetainedValue()
         
-        AppManager.shared.appTimer(1).dropFirst(5).sink { _ in
-            self.powerStatus(true)
-            self.counter = nil
-            
-        }.store(in: &updates)
-        
-        AppManager.shared.appTimer(6).sink { _ in
-            self.remaining = self.powerRemaing
-            self.counter = nil
-
-        }.store(in: &updates)
+        self.runLoopSource = loopSource
+        CFRunLoopAddSource(CFRunLoopGetMain(), loopSource, .defaultMode)
         
         #if DEBUG
             AppManager.shared.appTimer(90).sink { _ in
                 self.powerThermalCheck()
              
             }.store(in: &updates)
-        
         #endif
         
         AppManager.shared.appTimer(60).sink { _ in
             self.saver = self.powerSaveModeStatus
             self.metrics = self.powerProfilerDetails
-            self.counter = nil
 
         }.store(in: &updates)
         
         self.powerStatus(true)
+        self.remaining = self.powerRemaing
     
     }
     
     deinit {
+        if let source = runLoopSource {
+            CFRunLoopRemoveSource(CFRunLoopGetMain(), source, .defaultMode)
+        }
         self.updates.forEach { $0.cancel() }
         
     }
@@ -277,26 +272,7 @@ class BatteryManager:ObservableObject {
         
     }
     
-    private func powerUpdaterFallback() {
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-            if let counter = self.counter {
-                if counter.isMultiple(of: 1) {
-                    self.powerStatus(true)
-                    
-                }
-                
-                if counter.isMultiple(of: 6) {
-                    self.remaining = self.powerRemaing
-                    
-                }
-                
-            }
-            
-            self.counter = (self.counter ?? 0) + 1
-            
-        }
-        
-    }
+    // Fallback removed in favor of native IOKit runloop
     
     private func powerStatus(_ force:Bool = false) {
         if force == true {
@@ -350,15 +326,11 @@ class BatteryManager:ObservableObject {
     }
     
     private var powerCharging:BatteryChargingState {
-        let snapshot = IOPSCopyPowerSourcesInfo().takeRetainedValue()
-        let source = IOPSGetProvidingPowerSourceType(snapshot).takeRetainedValue()
-        
-        switch source as String == kIOPSACPowerValue {
-            case true : return .charging
-            case false : return .battery
-            
+        if self.powerIsCharging {
+            return .charging
+        } else {
+            return .battery
         }
-        
     }
 
     private var powerPercentage:Double {
@@ -382,16 +354,8 @@ class BatteryManager:ObservableObject {
     
     public var powerIsCharging: Bool {
         let snapshot = IOPSCopyPowerSourcesInfo().takeRetainedValue()
-        let sources = IOPSCopyPowerSourcesList(snapshot).takeRetainedValue() as Array
-        for source in sources {
-            if let description = IOPSGetPowerSourceDescription(snapshot, source).takeUnretainedValue() as? [String: Any] {
-                if description[kIOPSTypeKey] as? String == kIOPSInternalBatteryType {
-                    let isCharging = description[kIOPSIsChargingKey] as? Int ?? 0
-                    return isCharging == 1
-                }
-            }
-        }
-        return false
+        let providingSource = IOPSGetProvidingPowerSourceType(snapshot).takeRetainedValue() as String
+        return providingSource == kIOPSACPowerValue
     }
     
     public var powerIsCalculating: Bool {

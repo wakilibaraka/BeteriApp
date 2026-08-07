@@ -280,7 +280,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
                 button.addSubview(self.hosting)
                 button.action = #selector(applicationStatusBarButtonClicked(sender:))
                 button.target = self
-                button.sendAction(on: [.leftMouseUp, .rightMouseUp])
+                button.sendAction(on: [.leftMouseDown, .rightMouseDown])
                 
                 SettingsManager.shared.enabledPinned = .disabled
                 
@@ -314,10 +314,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
         popover.contentViewController = NSHostingController(rootView: view)
         return popover
     }()
-
     @objc func applicationStatusBarButtonClicked(sender: NSStatusBarButton) {
+        if WindowManager.shared.isAnimating {
+            return
+        }
+        
         let event = NSApp.currentEvent
-        let isRightClick = event?.type == .rightMouseUp || event?.type == .rightMouseDown || (event?.modifierFlags.contains(.control) == true)
+        let isRightClick = event?.type == .rightMouseDown || event?.type == .rightMouseUp || (event?.modifierFlags.contains(.control) == true)
         
         if isRightClick {
             if popover.isShown {
@@ -325,16 +328,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
             } else {
                 popover.show(relativeTo: sender.bounds, of: sender, preferredEdge: NSRectEdge.minY)
             }
-        }
-        else {
+        } else {
             if popover.isShown {
                 popover.performClose(sender)
             }
             
-            if WindowManager.shared.state == .hidden || WindowManager.shared.state == .dismissed {
-                WindowManager.shared.windowOpen(.userInitiated, device: nil)
-            } else {
+            if WindowManager.shared.state == .detailed || WindowManager.shared.state == .revealed || WindowManager.shared.state == .progress {
                 WindowManager.shared.windowSetState(.dismissed)
+            } else {
+                WindowManager.shared.windowOpen(.userInitiated, device: nil)
             }
         }
     }

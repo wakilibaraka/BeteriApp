@@ -6,7 +6,7 @@
 	<integer>12</integer>
 	<key>logs</key>
 	<dict>
-		<key>029E3A2C-7449-4A50-BC51-E96438E8E1AB</key>
+		<key>0A549E8A-A57D-48AA-9C90-C3800FFDA403</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -15,13 +15,13 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>029E3A2C-7449-4A50-BC51-E96438E8E1AB.xcactivitylog</string>
+			<string>0A549E8A-A57D-48AA-9C90-C3800FFDA403.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
 			<dict>
 				<key>highLevelStatus</key>
-				<string>S</string>
+				<string>W</string>
 				<key>totalNumberOfAnalyzerIssues</key>
 				<integer>0</integer>
 				<key>totalNumberOfErrors</key>
@@ -29,7 +29,7 @@
 				<key>totalNumberOfTestFailures</key>
 				<integer>0</integer>
 				<key>totalNumberOfWarnings</key>
-				<integer>0</integer>
+				<integer>8</integer>
 			</dict>
 			<key>schemeIdentifier-containerName</key>
 			<string>BatteryBoi project</string>
@@ -38,17 +38,17 @@
 			<key>schemeIdentifier-sharedScheme</key>
 			<integer>1</integer>
 			<key>signature</key>
-			<string>Cleaning project BatteryBoi with scheme BatteryBoi and configuration Release</string>
+			<string>Building project BatteryBoi with scheme BatteryBoi and configuration Release</string>
 			<key>timeStartedRecording</key>
-			<real>807744162.28585899</real>
+			<real>807751976.68079901</real>
 			<key>timeStoppedRecording</key>
-			<real>807744162.88775301</real>
+			<real>807751987.05679297</real>
 			<key>title</key>
-			<string>Cleaning project BatteryBoi with scheme BatteryBoi and configuration Release</string>
+			<string>Building project BatteryBoi with scheme BatteryBoi and configuration Release</string>
 			<key>uniqueIdentifier</key>
-			<string>029E3A2C-7449-4A50-BC51-E96438E8E1AB</string>
+			<string>0A549E8A-A57D-48AA-9C90-C3800FFDA403</string>
 		</dict>
-		<key>A641DE48-74A2-42D8-8D2E-610487CC9887</key>
+		<key>97728F27-1AC6-4047-BDE6-576369BF2F68</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -57,13 +57,13 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>A641DE48-74A2-42D8-8D2E-610487CC9887.xcactivitylog</string>
+			<string>97728F27-1AC6-4047-BDE6-576369BF2F68.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
 			<dict>
 				<key>highLevelStatus</key>
-				<string>S</string>
+				<string>W</string>
 				<key>totalNumberOfAnalyzerIssues</key>
 				<integer>0</integer>
 				<key>totalNumberOfErrors</key>
@@ -71,7 +71,7 @@
 				<key>totalNumberOfTestFailures</key>
 				<integer>0</integer>
 				<key>totalNumberOfWarnings</key>
-				<integer>0</integer>
+				<integer>8</integer>
 			</dict>
 			<key>schemeIdentifier-containerName</key>
 			<string>BatteryBoi project</string>
@@ -80,141 +80,15 @@
 			<key>schemeIdentifier-sharedScheme</key>
 			<integer>1</integer>
 			<key>signature</key>
-			<string>Cleaning project BatteryBoi with scheme BatteryBoi and configuration Release</string>
+			<string>Building project BatteryBoi with scheme BatteryBoi and configuration Release</string>
 			<key>timeStartedRecording</key>
-			<real>807744444.78253901</real>
+			<real>807761187.436324</real>
 			<key>timeStoppedRecording</key>
-			<real>807744445.57804894</real>
+			<real>807761196.12100995</real>
 			<key>title</key>
-			<string>Cleaning project BatteryBoi with scheme BatteryBoi and configuration Release</string>
+			<string>Building project BatteryBoi with scheme BatteryBoi and configuration Release</string>
 			<key>uniqueIdentifier</key>
-			<string>A641DE48-74A2-42D8-8D2E-610487CC9887</string>
-		</dict>
-		<key>B12F7A90-FC92-432C-AD79-5F075939C488</key>
-		<dict>
-			<key>className</key>
-			<string>IDECommandLineBuildLog</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
-			<key>fileName</key>
-			<string>B12F7A90-FC92-432C-AD79-5F075939C488.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>S</string>
-				<key>totalNumberOfAnalyzerIssues</key>
-				<integer>0</integer>
-				<key>totalNumberOfErrors</key>
-				<integer>0</integer>
-				<key>totalNumberOfTestFailures</key>
-				<integer>0</integer>
-				<key>totalNumberOfWarnings</key>
-				<integer>0</integer>
-			</dict>
-			<key>schemeIdentifier-containerName</key>
-			<string>BatteryBoi project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>BatteryBoi</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Cleaning project BatteryBoi with scheme BatteryBoi and configuration Release</string>
-			<key>timeStartedRecording</key>
-			<real>807744077.96953797</real>
-			<key>timeStoppedRecording</key>
-			<real>807744078.39756501</real>
-			<key>title</key>
-			<string>Cleaning project BatteryBoi with scheme BatteryBoi and configuration Release</string>
-			<key>uniqueIdentifier</key>
-			<string>B12F7A90-FC92-432C-AD79-5F075939C488</string>
-		</dict>
-		<key>B4B269B6-9B75-4263-B935-F86141BC5ADB</key>
-		<dict>
-			<key>className</key>
-			<string>IDECommandLineBuildLog</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
-			<key>fileName</key>
-			<string>B4B269B6-9B75-4263-B935-F86141BC5ADB.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>S</string>
-				<key>totalNumberOfAnalyzerIssues</key>
-				<integer>0</integer>
-				<key>totalNumberOfErrors</key>
-				<integer>0</integer>
-				<key>totalNumberOfTestFailures</key>
-				<integer>0</integer>
-				<key>totalNumberOfWarnings</key>
-				<integer>0</integer>
-			</dict>
-			<key>schemeIdentifier-containerName</key>
-			<string>BatteryBoi project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>BatteryBoi</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Cleaning project BatteryBoi with scheme BatteryBoi and configuration Release</string>
-			<key>timeStartedRecording</key>
-			<real>807744105.41305602</real>
-			<key>timeStoppedRecording</key>
-			<real>807744105.97229695</real>
-			<key>title</key>
-			<string>Cleaning project BatteryBoi with scheme BatteryBoi and configuration Release</string>
-			<key>uniqueIdentifier</key>
-			<string>B4B269B6-9B75-4263-B935-F86141BC5ADB</string>
-		</dict>
-		<key>D7548742-8A6A-4144-9032-355DE2C617BA</key>
-		<dict>
-			<key>className</key>
-			<string>IDECommandLineBuildLog</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
-			<key>fileName</key>
-			<string>D7548742-8A6A-4144-9032-355DE2C617BA.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>S</string>
-				<key>totalNumberOfAnalyzerIssues</key>
-				<integer>0</integer>
-				<key>totalNumberOfErrors</key>
-				<integer>0</integer>
-				<key>totalNumberOfTestFailures</key>
-				<integer>0</integer>
-				<key>totalNumberOfWarnings</key>
-				<integer>0</integer>
-			</dict>
-			<key>schemeIdentifier-containerName</key>
-			<string>BatteryBoi project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>BatteryBoi</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Cleaning project BatteryBoi with scheme BatteryBoi and configuration Release</string>
-			<key>timeStartedRecording</key>
-			<real>807744615.53201699</real>
-			<key>timeStoppedRecording</key>
-			<real>807744616.11337602</real>
-			<key>title</key>
-			<string>Cleaning project BatteryBoi with scheme BatteryBoi and configuration Release</string>
-			<key>uniqueIdentifier</key>
-			<string>D7548742-8A6A-4144-9032-355DE2C617BA</string>
+			<string>97728F27-1AC6-4047-BDE6-576369BF2F68</string>
 		</dict>
 	</dict>
 </dict>

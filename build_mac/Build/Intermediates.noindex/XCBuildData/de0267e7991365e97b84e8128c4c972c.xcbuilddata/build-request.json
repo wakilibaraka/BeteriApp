@@ -1,0 +1,66 @@
+{
+  "buildCommand" : {
+    "command" : "build",
+    "skipDependencies" : false,
+    "style" : "buildOnly"
+  },
+  "configuredTargets" : [
+    {
+      "guid" : "71ccc8d25f67220e2b8090ad5a0af725bd8aaeb806b1df73bec0e79ae2bf2b87"
+    }
+  ],
+  "containerPath" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/BatteryBoi.xcodeproj",
+  "continueBuildingAfterErrors" : false,
+  "dependencyScope" : "workspace",
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "activeArchitecture" : "arm64",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : false,
+      "hostTargetedPlatform" : null,
+      "platform" : "macosx",
+      "sdk" : "macosx26.5",
+      "sdkVariant" : "macos",
+      "supportedArchitectures" : [
+        "arm64e",
+        "arm64",
+        "x86_64"
+      ],
+      "targetArchitecture" : "arm64"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex",
+      "buildProductsPath" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Products",
+      "derivedDataPath" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac",
+      "indexDataStoreFolderPath" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Index.noindex/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Index.noindex/PrecompiledHeaders",
+      "pchPath" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/PrecompiledHeaders"
+    },
+    "configurationName" : "Release",
+    "overrides" : {
+      "commandLine" : {
+        "table" : {
+          "CODE_SIGN_IDENTITY" : "",
+          "CODE_SIGNING_ALLOWED" : "NO",
+          "CODE_SIGNING_REQUIRED" : "NO"
+        }
+      },
+      "synthesized" : {
+        "table" : {
+          "ACTION" : "build",
+          "ENABLE_PREVIEWS" : "NO",
+          "ENABLE_XOJIT_PREVIEWS" : "YES"
+        }
+      }
+    }
+  },
+  "schemeCommand" : "launch",
+  "showNonLoggedProgress" : true,
+  "useDryRun" : false,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}

@@ -7,7 +7,7 @@
         "key": "BeteriApp",
         "location": {
           "startingColumn": 26,
-          "startingLine": 520
+          "startingLine": 493
         }
       },
       {
@@ -15,7 +15,7 @@
         "key": "macOS System Utility",
         "location": {
           "startingColumn": 26,
-          "startingLine": 523
+          "startingLine": 496
         }
       },
       {
@@ -23,7 +23,7 @@
         "key": "Advanced Settings",
         "location": {
           "startingColumn": 27,
-          "startingLine": 545
+          "startingLine": 518
         }
       },
       {
@@ -31,7 +31,7 @@
         "key": "Quit BeteriApp",
         "location": {
           "startingColumn": 27,
-          "startingLine": 559
+          "startingLine": 532
         }
       },
       {
@@ -39,7 +39,7 @@
         "key": "Connected Devices",
         "location": {
           "startingColumn": 26,
-          "startingLine": 585
+          "startingLine": 558
         }
       },
       {
@@ -47,7 +47,7 @@
         "key": "No Connected Devices",
         "location": {
           "startingColumn": 34,
-          "startingLine": 606
+          "startingLine": 579
         }
       }
     ]

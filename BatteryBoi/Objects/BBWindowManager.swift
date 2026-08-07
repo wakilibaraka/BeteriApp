@@ -36,6 +36,7 @@ class WindowManager: ObservableObject {
     
     private var updates = Set<AnyCancellable>()
     private var triggered:Int = 0;
+    private var lastOpenedTime: Date = Date.distantPast
     private var screen:CGSize {
         if let display = CGMainDisplayID() as CGDirectDisplayID? {
             return .init(width: CGFloat(CGDisplayPixelsWide(display)), height:CGFloat(CGDisplayPixelsHigh(display)))
@@ -47,7 +48,8 @@ class WindowManager: ObservableObject {
     @Published public var hover: Bool = false
     @Published public var state: HUDState = .hidden
     @Published public var opacity: CGFloat = 1.0
-    @Published var showSettings: Bool = false
+    @Published public var showSettings: Bool = false
+    @Published public var isAnimating: Bool = false
 
     init() {
 
@@ -60,7 +62,7 @@ class WindowManager: ObservableObject {
 
         }.store(in: &updates)
 
-        AppManager.shared.$alert.removeDuplicates().delay(for: .seconds(10.0), scheduler: RunLoop.main).sink { type in
+        AppManager.shared.$alert.removeDuplicates().delay(for: .seconds(7.0), scheduler: RunLoop.main).sink { type in
             if AppManager.shared.alert?.timeout == false && self.state == .revealed {
                 self.windowSetState(.dismissed)
                 
@@ -86,36 +88,39 @@ class WindowManager: ObservableObject {
                 if SettingsManager.shared.enabledPinned == .disabled {
                     if self.state.visible == true {
                         self.windowSetState(.dismissed)
-                        
                     }
-
-                }
-                else {
+                } else {
                     self.windowSetState(.revealed)
-
                 }
-                
             }
-            
         }
         
         $state.sink { state in
             if state == .dismissed {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                self.isAnimating = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                     WindowManager.shared.windowClose()
-                    
+                    self.isAnimating = false
                 }
                 
             }
             else if state == .progress {
+                self.isAnimating = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.windowSetState(.revealed)
-                    
+                    if AppManager.shared.alert == .userSettings {
+                        self.windowSetState(.detailed)
+                    } else {
+                        self.windowSetState(.revealed)
+                    }
                 }
-                
             }
-            else if state == .revealed && AppManager.shared.alert?.timeout == false {
-                // Do not automatically transition to .detailed. Let it stay as a round pop-up.
+            else if state == .revealed {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.isAnimating = false
+                }
+                if AppManager.shared.alert?.timeout == false {
+                    // Do not automatically transition to .detailed. Let it stay as a round pop-up.
+                }
             }
             
 
@@ -124,8 +129,22 @@ class WindowManager: ObservableObject {
     }
     
     public func windowSetState(_ state:HUDState, animated:Bool = true) {
+        if self.isAnimating && state != .revealed {
+            return
+        }
+        
+        if state == .dismissed && Date().timeIntervalSince(self.lastOpenedTime) < 3.0 && AppManager.shared.alert?.timeout == false {
+            return
+        }
+        
+        if state == .progress || state == .revealed {
+            if self.state == .hidden || self.state == .dismissed {
+                self.lastOpenedTime = Date()
+            }
+        }
+        
         if self.state != state {
-            withAnimation(.interactiveSpring(response: 0.4, dampingFraction: 0.7, blendDuration: 1.0)) {
+            withAnimation(.interactiveSpring(response: 0.35, dampingFraction: 0.72, blendDuration: 0.8)) {
                 self.state = state
                 
             }
@@ -141,6 +160,11 @@ class WindowManager: ObservableObject {
     public func windowOpen(_ type:HUDAlertTypes, device:BluetoothObject?) {
         if let window = self.windowExists(type) {
             window.contentView = WindowHostingView(rootView: HUDParent(type, device: device))
+            
+            // Allow window repositioning via drag and drop by not forcing frame here,
+            // or just use windowHandleFrame() on reuse.
+            // When the window is reused, we want to snap it to its last saved position.
+            window.setFrame(self.windowHandleFrame(), display: false)
             
             DispatchQueue.main.async {
                 if window.canBecomeKeyWindow {
@@ -195,11 +219,12 @@ class WindowManager: ObservableObject {
         window?.styleMask = [.borderless, .miniaturizable, .resizable]
         window?.level = .statusBar
         window?.contentView?.translatesAutoresizingMaskIntoConstraints = false
-        window?.center()
         window?.title = "modalwindow"
         window?.isMovableByWindowBackground = true
         window?.backgroundColor = .clear
+        
         window?.setFrame(self.windowHandleFrame(), display: true)
+        
         window?.titlebarAppearsTransparent = true
         window?.titleVisibility = .hidden
         window?.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
@@ -261,11 +286,15 @@ class WindowManager: ObservableObject {
             if let str = UserDefaults.main.string(forKey: "sd_window_rect") {
                 return NSRectFromString(str)
             }
-            let windowMargin: CGFloat = 40
-            let positionDefault = CGSize(width: 480, height: 420)
-            let positionLeft = (self.screen.width / 2) - (positionDefault.width / 2)
-            let positionTop = self.screen.height - (positionDefault.height + windowMargin)
-            return NSMakeRect(positionLeft, positionTop, positionDefault.width, positionDefault.height)
+            let screen = NSScreen.main ?? NSScreen.screens.first!
+            let screenFrame = screen.frame          // full screen, including menu bar
+            let windowW: CGFloat = 500
+            let windowH: CGFloat = 200
+            // Topmost right: small padding from the right edge
+            let x = screenFrame.maxX - windowW - 20
+            // Place window so its top edge is flush with the top of the screen
+            let y = screenFrame.maxY - windowH
+            return NSMakeRect(x, y, windowW, windowH)
         }
         set {
             UserDefaults.main.set(NSStringFromRect(newValue), forKey: "sd_window_rect")

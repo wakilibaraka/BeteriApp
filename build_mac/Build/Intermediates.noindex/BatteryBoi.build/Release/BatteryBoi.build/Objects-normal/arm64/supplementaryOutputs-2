@@ -1,0 +1,12 @@
+{
+  "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/BatteryBoi/Views/Component/BBAboutView.swift" : {
+    "abi-baseline-json" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/BatteryBoi.build/Release/BatteryBoi.build/Objects-normal/arm64/BeteriApp.abi.json",
+    "const-values" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/BatteryBoi.build/Release/BatteryBoi.build/Objects-normal/arm64/BatteryBoi-primary.swiftconstvalues",
+    "dependencies" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/BatteryBoi.build/Release/BatteryBoi.build/Objects-normal/arm64/BatteryBoi-primary.d",
+    "diagnostics" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/BatteryBoi.build/Release/BatteryBoi.build/Objects-normal/arm64/BatteryBoi-primary.dia",
+    "objc-header" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/BatteryBoi.build/Release/BatteryBoi.build/Objects-normal/arm64/BeteriApp-Swift.h",
+    "swiftdoc" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/BatteryBoi.build/Release/BatteryBoi.build/Objects-normal/arm64/BeteriApp.swiftdoc",
+    "swiftmodule" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/BatteryBoi.build/Release/BatteryBoi.build/Objects-normal/arm64/BeteriApp.swiftmodule",
+    "swiftsourceinfo" : "/Users/baraka/.gemini/antigravity/scratch/BatteryBoi/build_mac/Build/Intermediates.noindex/BatteryBoi.build/Release/BatteryBoi.build/Objects-normal/arm64/BeteriApp.swiftsourceinfo"
+  }
+}
