@@ -1,163 +1,27 @@
+# BeteriApp
 
-![BeteriApp Promo image](https://pub-3d59231d7ecc43e7af32a82026f9e071.r2.dev/BeteriApp%20Poster.jpg)
+BeteriApp is a simple, beautiful replacement for the default macOS battery indicator in your menu bar. 
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-![GitHub Sponsors](https://img.shields.io/github/sponsors/Baraka254)
-[![Github All Releases](https://img.shields.io/github/downloads/Baraka254/BeteriApp/total.svg)]()
-![GitHub contributors](https://img.shields.io/github/contributors/Baraka254/BeteriApp)
-[![Swift Version](https://img.shields.io/badge/Swift-5.x-orange.svg)]()
-[![MacOS Version](https://img.shields.io/badge/Supported%20Version-v11.0,%20v12.0,%20v13.0,%20v14.0+-orange)]()
-[![Twitter](https://img.shields.io/badge/Follow%20BeteriAppApp-black)](https://twitter.com/beteriappapp)
+Built by Emmanuel Baraka, this app is a streamlined take on the original BatteryBoi project, designed to be straightforward and easy to use without unnecessary bloat.
 
+## Features
 
-# BeteriApp - A Battery Indicator to Rule Them All!
-**BeteriApp** is a **replacement Battery Indicator for the MacOS Menu Bar**. <br><br>
+- **Colored Battery Icon**: View your Mac's battery percentage directly in the menu bar with a dynamic icon that changes color based on your battery level (Green for healthy, Yellow for warning, Red for critical).
+- **Time Remaining Insights**: See exactly how much time you have left before your battery depletes.
+- **Peripheral Device Monitoring**: Keep track of your connected Bluetooth devices (like mice, keyboards, and headphones) and view their battery levels right alongside your Mac's battery.
+- **Configurable Alerts**: Set up custom battery alerts so you never get caught off guard by a dead battery.
 
-## Why
-The battery icon really needed an indicator for how much time is left in terms of minutes and hours. So as a fun evening project, I ([Emmanuel Baraka](https://twitter.com/Baraka254)) built it. 
+## Installation
 
-<br>
-However, because of popular demand, the scope of this project has expanded significantly to be a full-fledged, open-source, completely free battery app giving you beautiful notifications and insights into your battery, and even your connected Bluetooth devices<br><br><br>
-<br>
+1. Download the latest `.dmg` release from the [Releases](https://github.com/Baraka254/BeteriApp/releases) page.
+2. Drag `BeteriApp.app` into your Applications folder.
+3. Launch the app and enjoy!
+*(Note: You can hide the default macOS battery icon by going to System Settings > Control Center > Battery > Show in Menu Bar).*
 
-## News! News! News! - Version 3.0 & the iOS App
-After crossing 20k downloads, I am happy to launch not only some huge updates coming to Version 3.0, but also the release of the BeteriApp iOS and iPadOS apps. Plus much more. 
-<br>
+## Privacy
 
-**See the full post about it all [here](https://github.com/Baraka254/BeteriApp/discussions/62)**
+BeteriApp is completely local. It does not collect, store, or transmit any of your personal data.
 
-<br><br>
+## Acknowledgements
 
-## How (to Install)
-
-#### Manual Download
-1. You can install the app by downloading the [latest released .DMG file](https://github.com/Baraka254/BeteriApp/releases/). This contains an executable version of the app - **you do not need to Xcode to run this.**
-2. Open/mount the DMG file and drag BeteriApp into the Applications Folder. And that's it!
-3. You can hide the default battery icon by going to **System Preferences** > **Control Center** > **Battery** > **Show in Menu Bar**
-<br><br><br>
-
-#### Homebrew
-You can install BeteriApp via Homebrew thanks to the contribution from [Marcus Kannicht](https://github.com/kannicht). `$ brew install beteriapp`
-
-<br><br><br>
-
-### Works On...
-**BeteriApp** runs on **both Intel & Silicon (M1 & M2)** for the following MacOS versions
-- 11.0 (Big Sur)
-- 12.0 (Monterey)
-- 13.0 (Ventura)
-- 14.0 (Sonoma)
-- 15.0 [(Big Chungus)](https://twitter.com/Baraka254/status/1643378900313964544?s=20)
-
-<br><br><br>
-
-## Localization
-**BeteriApp** has been Localized into the following languages, either by way of auto-translation or by direct translation by the community.
-
-#### Verified
-- 🇬🇧 [English](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/en.lproj/LocalizableMain.strings)
-- 🇯🇵 [Japanese](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/ja.lproj/LocalizableMain.strings) (Provided by [@fus1ondev](https://github.com/fus1ondev))
-- 🇷🇺 [Russian](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/ru.lproj/LocalizableMain.strings) (Provided by [Alexey Petraky @ko-oler](https://github.com/ko-oler))
-- 🇳🇱 [Dutch](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/nl.lproj/LocalizableMain.strings) (Provided by [@joostiphone](https://github.com/joostiphone))
-- 🇹🇷 [Turkish](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/tr.lproj/LocalizableMain.strings) (Provided by [Soner Kalonya @kalonya](https://github.com/kalonya))
-- 🇨🇳 [Chinese (Simplified)](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/tr.lproj/LocalizableMain.strings) (Provided by [Desmoed Richtofen @Shane1119](https://github.com/Shane1119))
-- 🇹🇼 [Chinese (Traditional)](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/tr.lproj/LocalizableMain.strings) (Provided by [Desmoed Richtofen @Shane1119](https://github.com/Shane1119))
-- 🇸🇰 [Slovenian](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/tr.lproj/LocalizableMain.strings) (Provided by [@drodmantras](https://github.com/drodmantras))
-- 🇸🇰 [Slovak](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/tr.lproj/LocalizableMain.strings) (Provided by [@Svec-Tomas](https://github.com/Svec-Tomas))
-- 🇻🇳 [Vietnamese](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/vi.lproj/LocalizableMain.strings) (Provided by [Hieu Huynh @hieuhuynh93](https://github.com/hieuhuynh93))
-- 🇪🇸 [Spanish](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/es.lproj/LocalizableMain.strings) (Provided by [@David C](https://github.com/davidcafor))
-- 🇩🇪 [German](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/de.lproj/LocalizableMain.strings) (Provided by  [Hendrik Erz @nathanlesage](https://github.com/nathanlesage))
-- 🇰🇷 [Korean](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/ko.lproj/LocalizableMain.strings) (Provided by  [YiGeon @YiGeon](https://github.com/YiGeon))
-- 🇫🇷 [French](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/fr.lproj/LocalizableMain.strings) (Provided by  [Ben Wayne](https://github.com/))
-- 🇮🇹 [Italian](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/it.lproj/LocalizableMain.strings) (Provided by  [Francesco @katullo11](https://github.com/katullo11))
-
-
-
-#### Unverified/Auto-Translated
-- 🇵🇹 [Portuguese (Traditional)](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/pt-PT.lproj/LocalizableMain.strings)
-- 🇧🇷 [Portuguese (Brazil)](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/pt-BR.lproj/LocalizableMain.strings)
-
-<br>
-
-**If you would like to help by verifying your native language, or if it is not yet on the list, add it!**
-
-You can do this on our [Crowdin Translation Page](https://crowdin.com/project/beteriapp?already_accepted=16003147)
-
-
-
-
-<br><br><br>
-## Roadmap
-With continued support, I will be adding...
-
-- [X] **🔋 Battery Replacement**
-- [x] **🚀 Login at Launch**
-- [x] **👴🏻 Support for macOS Monterey & Big Sur (v11)**
-- [ ] **🟡 System Colour Alerts & Charging Icon**
-- [ ] **🪫 Low Power Mode Toggle** (Suggested by [@Crear12](https://github.com/Crear12))
-- [x] **🇲🇽 Multiple Language Support** (Helo Translate for your local language here https://github.com/Baraka254/BeteriApp/issues/12)
-- [x] **⬇️ Sparkle Integration**
-- [x] **🚨 Improved Alerts**
-- [x] **🏝️ A Dynamic Island-Style Modal with Sexy Indicator**
-- [ ] **☀️ Light Mode**
-- [x] **🔉 Sound Effects**
-- [ ] **🎨 Customisation View** Funding Goal: **$500**
-    - [ ] **🔉 Sound Effects (Toggle)**
-    - [ ] **⚙️Display (Toggle)**
-    - [ ] **👁️Hide/Show Menu Bar Toggle**
-    - [ ] **☀️Light/Dark Mode Toggle**
-
-- [ ] **📈 More Stats**
-- [x] **↗️ Move and Snap to Position**
-- [x] **⚙️ App Preferences**
-- [ ] **🎧 Bluetooth Device Support**
-    - [ ] **Custom Notifications**
-    - [x] **Quick View**
-    - [ ] **Add to Menu Bar**
-
-- [ ] **⌨️ Custom Keyboard Shortcuts**
-- [ ] **⌨️ Custom IF/THEN Triggers** (at 10%, lower the brightness to 0.3) 
-- [ ] **📱 iOS/iPad App (Bidirectional Syncing of Battery Information)** 
-- [ ] **🧳 SMJobBless Helper Command Line**
-
-<br>Ideas are welcome. 
-
-<br><br><br>
-
-## Q&A
-**Q.** Is the app GDPR compliment?<br>
-**A.** BeteriApp does not collect, store, process, or transfer any personal information as defined by Article 4, Section 1 of the GDPR
-<br><br>
-**Q.** Does this app steal my data? <br>
-**A.** The app **only logs installs** with [Enalog](https://github.com/Baraka254/EnalogSwift). <br><br>&ensp;&ensp;&ensp;The information captured in this logging event is... <br><br>&ensp;&ensp;&ensp; - **Device Architecture (Silicon or Intel)** <br>
-&ensp;&ensp;&ensp; - **MacOS Version Number**<br>
-&ensp;&ensp;&ensp; - **System Locale (ISO Country Code)** <br>
-&ensp;&ensp;&ensp; - **Theme (Dark/Light Mode)**. 
-<br><br>
-**Q.** What about Personal Data? <br>
-**A.** No personal data or anything that can be remotely attributed to your person is collected, stored, processed, or transferred. 
-<br><br>
-**Q.** Did you make any other sweet sweet apps I can try? <br>
-**A.** Yeah, [SprintDock](https://sprintdock.app) is my masterpeice. Check it out!
-<br><br>
-**Q.** The estimated time does not show up. Why? <br>
-**A.** Estimated time until battery depletion is calculated by the System. Sometimes this information just isn't available. When it isn't, it will fall back on the Battery Percentage. 
-<br><br>
-**Q.** Can I revert back to the old MacOS Battery Indicator?<br>
-**A.** Yes! Go to **System Preferences** > **Control Center** > **Battery** > **Show in Menu Bar** and toggle it on. 
-<br><br>
-**Q.** Is there support for 3rd Party Devices?<br>
-**A.** Devices that are connected (via Bluetooth) now show up with their battery level (if available) in BeteriApp.
-<br><br>
-**Q.** Some Bluetooth devices don't show the Battery Level. Why?<br>
-**A.** BeteriApp uses **System Information** to get this information, if it's not in here the device simply may not offer this information or it isn't supported.
-
-<br><br><br>
-
-## BeteriApp In the Media
-Here's a list of places BeteriApp has been featured across the web and across the world. 
-- [🇯🇵 Apple CH](https://applech2.com/archives/20230831-beteriapp-for-macbook-battery.html)
-- [🇩🇪 iFun](https://www.ifun.de/beteriapp-zeigt-die-restliche-akku-laufzeit-in-der-menueleiste-215907/)
-
-<br><br><br>
-
+This project is a personal fork of the original [BatteryBoi](https://github.com/thebarbican19/BatteryBoi) app, simplified and modified by Emmanuel Baraka to include a cleaner UI, colored battery indicators, and a refactored Bluetooth/Network manager.
