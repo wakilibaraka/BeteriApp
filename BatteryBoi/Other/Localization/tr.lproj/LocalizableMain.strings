@@ -5,8 +5,8 @@
 "AlertChargingCompleteTitle" = "Şarj Tamamlandı";
 "AlertOverheatingTitle" = "Aşırı Isınma";
 "AlertLimitedTitle" = "Yetersiz Batarya...";
-"AlertDeviceConnectedTitle" = "'%@' Bağlandı"; // 'Joe's Headphones' Connected
-"AlertDeviceDisconnectedTitle" = "'%@' Bağlantısı Kesildi"; // 'Joe's Headphones' Disconnected
+"AlertDeviceConnectedTitle" = "'%@' Bağlandı"; // 'Emmanuel Baraka's Headphones' Connected
+"AlertDeviceDisconnectedTitle" = "'%@' Bağlantısı Kesildi"; // 'Emmanuel Baraka's Headphones' Disconnected
 "" = "Bilinmiyor";
 "AlertDeviceCalculatingTitle" = "Hesaplanıyor...";
 
@@ -34,7 +34,7 @@
 "SettingsQuitLabel" = "Çıkış";
 "SettingsPinnedLabel" = "Ekrana Sabitle";
 "SettingsEightyLabel" = "%80'e kadar şarj et";
-"SettingsRateLabel" = "BatteryBoi'yi değerlendir";
+"SettingsRateLabel" = "BeteriApp'yi değerlendir";
 "SettingsEfficiencyLabel" = "Düşük Güç";
 "SettingsCheckUpdatesLabel" = "Güncellemeleri Kontrol Et";
 "SettingsNewUpdateLabel" = "Yeni Güncellemeyi Yükle";
@@ -65,11 +65,11 @@
 "UpdateStatusEmptyLabel" = "İndirilebilir Güncelleme Yok";
 "UpdateStatusNewLabel" = "Yeni Güncelleme Mevcut!";
 
-"AboutTitle" = "BatteryBoi, Herkes için ücretsiz, sınırsız...";
-"AboutBodyOne" = "Cüzdanların tekrarlayan abonelikler karşısında sık sık inlediği yoğun uygulama dünyasında, BatteryBoi sonuna dek %100 ücretsiz ve Açık-Kaynak!";
+"AboutTitle" = "BeteriApp, Herkes için ücretsiz, sınırsız...";
+"AboutBodyOne" = "Cüzdanların tekrarlayan abonelikler karşısında sık sık inlediği yoğun uygulama dünyasında, BeteriApp sonuna dek %100 ücretsiz ve Açık-Kaynak!";
 "AboutBodyTwo" = "Bu kalitede bir uygulamanın hazırlanması, günler süren çalışmanın, kan ve terin, bazen de gözyaşlarının sonucudur. Bu yüzden, lütfen, maddi durumu elverişli olan kişi ve işletmelerden bağış yapmayı düşünmelerini rica ediyorum.";
 "AboutBodyThree" = "Bağışlar, projemizin ayakta kalmasını sağlayacak ve güncellemelerin/duzeltmelerin devam etmesine yardımcı olacaktır.";
-"AboutBodyFooter" = "Teşekkürler - Joe (BatteryBoi'nin Kurucusu)";
+"AboutBodyFooter" = "Teşekkürler - Emmanuel Baraka (BeteriApp'nin Kurucusu)";
 "AboutGithubAction" = "GitHub";
 "AboutDonateAction" = "Bağış Yap";
 "AboutShareAction" = "Paylaş";

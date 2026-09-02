@@ -5,8 +5,8 @@
 "AlertChargingCompleteTitle" = "Зарядка завершена";
 "AlertOverheatingTitle" = "Перегрев";
 "AlertLimitedTitle" = "Недостаточно батареи...";
-"AlertDeviceConnectedTitle" = "'%@' Подключено"; // 'Joe's Headphones' Connected
-"AlertDeviceDisconnectedTitle" = "'%@' Отключено"; // 'Joe's Headphones' Disconnected
+"AlertDeviceConnectedTitle" = "'%@' Подключено"; // 'Emmanuel Baraka's Headphones' Connected
+"AlertDeviceDisconnectedTitle" = "'%@' Отключено"; // 'Emmanuel Baraka's Headphones' Disconnected
 "" = "Неизвестно";
 "AlertDeviceCalculatingTitle" = "Идёт рассчёт...";
 
@@ -34,7 +34,7 @@
 "SettingsQuitLabel" = "Выйти";
 "SettingsPinnedLabel" = "Закрепить на экране";
 "SettingsEightyLabel" = "Зарядка до 80%";
-"SettingsRateLabel" = "Оценить BatteryBoi";
+"SettingsRateLabel" = "Оценить BeteriApp";
 "SettingsEfficiencyLabel" = "Режим энергосбережения";
 "SettingsCheckUpdatesLabel" = "Проверить";
 "SettingsNewUpdateLabel" = "Установить новое обновление";
@@ -65,11 +65,11 @@
 "UpdateStatusEmptyLabel" = "Обновлений нет";
 "UpdateStatusNewLabel" = "Доступно обновление!";
 
-"AboutTitle" = "BatteryBoi, Бесплатный, Навсегда, для Всех...";
-"AboutBodyOne" = "В мире приложений, где наши кошельки страдают от всевозможных подписок, BatteryBoi на 100% бесплатный и c открытым исходным кодом навсегда!";
+"AboutTitle" = "BeteriApp, Бесплатный, Навсегда, для Всех...";
+"AboutBodyOne" = "В мире приложений, где наши кошельки страдают от всевозможных подписок, BeteriApp на 100% бесплатный и c открытым исходным кодом навсегда!";
 "AboutBodyTwo" = "Создание приложения с такими красивым интерфейсом потребовало много дней усердной работы, пота и иногда даже слез. Поэтому я прошу людей и компании, которые могут себе позволить, сделать пожертвования.";
 "AboutBodyThree" = "Пожертвования позволят и дальше поддерживать выпуск правок и обновлений для приложения.";
-"AboutBodyFooter" = "Спасибо тебе - Joe (Основатель BatteryBoi)";
+"AboutBodyFooter" = "Спасибо тебе - Emmanuel Baraka (Основатель BeteriApp)";
 "AboutGithubAction" = "GitHub";
 "AboutDonateAction" = "Пожертвовать";
 "AboutShareAction" = "Поделиться";

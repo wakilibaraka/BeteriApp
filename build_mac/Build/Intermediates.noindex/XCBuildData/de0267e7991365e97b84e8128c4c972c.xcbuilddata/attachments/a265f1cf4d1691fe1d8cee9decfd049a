@@ -1,4 +1,0 @@
-module EnalogSwift {
-header "EnalogSwift-Swift.h"
-export *
-}

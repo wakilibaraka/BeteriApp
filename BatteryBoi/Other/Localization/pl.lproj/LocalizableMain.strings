@@ -3,8 +3,8 @@
 "AlertChargingTitle" = "Ładowanie...";
 "AlertChargingStoppedTitle" = "Ładowarka odłączona";
 "AlertChargingCompleteTitle" = "Ładowanie zakończone";
-"AlertDeviceConnectedTitle" = "Podłączono '%@'"; //'Podłączono słuchawki Joe'
-"AlertDeviceDisconnectedTitle" = "Odłączono '%@'"; //'Odłączono słuchawki Joe'
+"AlertDeviceConnectedTitle" = "Podłączono '%@'"; //'Podłączono słuchawki Emmanuel Baraka'
+"AlertDeviceDisconnectedTitle" = "Odłączono '%@'"; //'Odłączono słuchawki Emmanuel Baraka'
 "AlertDeviceUnknownTitle" = "Nieznane";
 "AlertDeviceCalculatingTitle" = "Obliczanie...";
 

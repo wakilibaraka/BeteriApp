@@ -5,8 +5,8 @@
 "AlertChargingCompleteTitle" = "Nabíjanie dokončené";
 "AlertOverheatingTitle" = "Prehrievanie";
 "AlertLimitedTitle" = "Nedostatočná batéria...";
-"AlertDeviceConnectedTitle" = "'%@' pripojené"; // 'Joe's Headphones' Connected
-"AlertDeviceDisconnectedTitle" = "'%@' odpojené"; // 'Joe's Headphones' Disconnected
+"AlertDeviceConnectedTitle" = "'%@' pripojené"; // 'Emmanuel Baraka's Headphones' Connected
+"AlertDeviceDisconnectedTitle" = "'%@' odpojené"; // 'Emmanuel Baraka's Headphones' Disconnected
 "" = "Neznáme";
 "AlertDeviceCalculatingTitle" = "Prebieha výpočet...";
 
@@ -34,7 +34,7 @@
 "SettingsQuitLabel" = "Ukončiť";
 "SettingsPinnedLabel" = "Pripnúť na obrazovku";
 "SettingsEightyLabel" = "Nabiť do 80%";
-"SettingsRateLabel" = "Ohodnotiť BatteryBoi";
+"SettingsRateLabel" = "Ohodnotiť BeteriApp";
 "SettingsEfficiencyLabel" = "Nízky výkon";
 "SettingsCheckUpdatesLabel" = "Vyhľadať aktualizácie";
 "SettingsNewUpdateLabel" = "Nainštalovať novú aktualizáciu";
@@ -65,11 +65,11 @@
 "UpdateStatusEmptyLabel" = "Žiadne dostupné aktualizácie";
 "UpdateStatusNewLabel" = "Dostupná nová aktualizácia!";
 
-"AboutTitle" = "BatteryBoi, zadarmo, navždy, pre každého...";
-"AboutBodyOne" = "V rušnom prostredí aplikácií, kde peňaženky často plačú nad opakujúcimi sa mesačnými platbami... BatteryBoi je 100% navždy zadarmo a open-source!";
+"AboutTitle" = "BeteriApp, zadarmo, navždy, pre každého...";
+"AboutBodyOne" = "V rušnom prostredí aplikácií, kde peňaženky často plačú nad opakujúcimi sa mesačnými platbami... BeteriApp je 100% navždy zadarmo a open-source!";
 "AboutBodyTwo" = "Vytvorenie tejto aplikácie, ktorá vyzerá takto dobre, znamená veľa dní práce, potenia krvi a niekedy aj sĺz. Preto prosím ľudí a firmy, ktoré si to môžu dovoliť, aby zvážili príspevok.";
 "AboutBodyThree" = "Vďaka Vašim príspevkom bude aplikácia fungovať a aktualizácie/opravy pribúdať.";
-"AboutBodyFooter" = "Ďakujem - Joe (autor BatteryBoi)";
+"AboutBodyFooter" = "Ďakujem - Emmanuel Baraka (autor BeteriApp)";
 "AboutGithubAction" = "GitHub";
 "AboutDonateAction" = "Prispieť";
 "AboutShareAction" = "Zdieľať";

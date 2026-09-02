@@ -198,7 +198,7 @@ struct HUDIcon: View {
             .offset(y:1)
             
         }
-        .frame(width:44, height: 44)
+        .frame(width: 28, height: 28)
         .padding(.leading, 8)
         .padding(.trailing, 4)
         .background(Color.clear)
@@ -210,48 +210,39 @@ struct HUDIcon: View {
 struct ActiveConnectionsView: View {
     @EnvironmentObject var bluetooth: BluetoothManager
     
+    var connectedDevices: [BluetoothObject] {
+        bluetooth.list.filter { $0.connected == .connected && $0.type.icon != "" }
+    }
+    
+    var displayConnections: [BluetoothObject] {
+        Array(connectedDevices.prefix(2))
+    }
+    
     var body: some View {
-        HStack(spacing: -6) {
-            let connected = bluetooth.list.filter { $0.connected == .connected && $0.type.icon != "" }
-            
-            ForEach(connected.prefix(4), id: \.address) { device in
-                ZStack {
-                    Circle()
-                        .fill(Color("BatteryBackground"))
-                        .opacity(0.8)
-                    
-                    Circle()
-                        .strokeBorder(Color.white.opacity(0.1), lineWidth: 1)
-                        
+        HStack(spacing: 6) {
+            ForEach(displayConnections, id: \.address) { (device: BluetoothObject) in
+                HStack(spacing: 4) {
                     Image(systemName: device.type.icon)
-                        .font(.system(size: 10, weight: .bold))
-                        .foregroundColor(Color("BatterySubtitle"))
+                        .font(.system(size: 9, weight: .bold))
+                    Text(device.device ?? device.type.type.name)
+                        .font(.system(size: 10, weight: .medium))
+                        .lineLimit(1)
                 }
-                .frame(width: 24, height: 24)
-                .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 1)
-                // Add a small hover scale effect
-                .scaleEffect(1.0)
-                .animation(.spring(), value: connected)
+                .foregroundColor(.white.opacity(0.7))
+                .padding(.horizontal, 6)
+                .padding(.vertical, 3)
+                .background(Color.white.opacity(0.1))
+                .cornerRadius(6)
             }
             
-            if connected.count > 4 {
-                ZStack {
-                    Circle()
-                        .fill(Color("BatteryBackground"))
-                        .opacity(0.8)
-                    
-                    Circle()
-                        .strokeBorder(Color.white.opacity(0.1), lineWidth: 1)
-                        
-                    Text("+\(connected.count - 4)")
-                        .font(.system(size: 10, weight: .bold))
-                        .foregroundColor(Color("BatterySubtitle"))
-                }
-                .frame(width: 24, height: 24)
-                .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 1)
+            if connectedDevices.count > 2 {
+                Text("+\(connectedDevices.count - 2)")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundColor(.white.opacity(0.6))
+                    .padding(.horizontal, 4)
             }
         }
-        .padding(.trailing, 8)
+        .layoutPriority(1)
     }
 }
 
@@ -270,13 +261,14 @@ struct HUDSummary: View {
         HStack(alignment: .center) {
             HUDIcon()
             
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: 1) {
                 Text(self.title)
-                    .font(.system(size: 20, weight: .bold))
+                    .font(.system(size: 15, weight: .bold))
                     .foregroundColor(.white)
                     .lineLimit(2)
                 
                 ViewMarkdown($subtitle)
+                    .font(.system(size: 11, weight: .medium))
                     .opacity(0.8)
                 
                 if self.updates.available != nil {
@@ -284,13 +276,14 @@ struct HUDSummary: View {
                     
                 }
                 
+                if self.title != "" {
+                    ActiveConnectionsView()
+                        .padding(.top, 2)
+                }
+                
             }
             
             Spacer()
-            
-            if self.title != "" {
-                ActiveConnectionsView()
-            }
             
         }
         .blur(radius: self.visible ? 0.0 : 4.0)
@@ -499,7 +492,7 @@ struct HUDView: View {
                 }
             }
         }
-        .frame(width: window.state == .detailed ? 480 : 400, height: window.state == .detailed ? (window.showSettings ? 650 : 270) : 200)
+        .frame(width: window.state == .detailed ? 480 : 400, height: window.state == .detailed ? (window.showSettings ? 750 : 370) : 200)
         .background(
             ZStack {
                 if window.state == .detailed {
@@ -601,7 +594,7 @@ struct DetailedPanelView: View {
                     Spacer()
                 }
                 .padding(14)
-                .frame(width: 160)
+                .frame(width: 180)
                 .frame(maxHeight: .infinity)
                 .background(Color.primary.opacity(0.04))
                 .cornerRadius(12)
@@ -645,6 +638,10 @@ struct DetailedPanelView: View {
             .frame(height: 200)
             .padding(14)
             
+            // Battery Stats Row — always visible
+            BatteryStatsPanel()
+                .padding(.horizontal, 14)
+                .padding(.bottom, 14)
             
             if window.showSettings {
                 Divider()
@@ -655,7 +652,7 @@ struct DetailedPanelView: View {
                     .padding(.top, 4)
             }
         }
-        .frame(width: 480, height: window.showSettings ? 650 : 270)
+        .frame(width: 480, height: window.showSettings ? 750 : 370)
         .clipped()
     }
 }

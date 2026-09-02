@@ -3,8 +3,8 @@
 "AlertChargingTitle" = "正在充電...";
 "AlertChargingStoppedTitle" = "充電結束";
 "AlertChargingCompleteTitle" = "電量已滿";
-"AlertDeviceConnectedTitle" = "'%@' 已連線"; // 'Joe's Headphones' Connected
-"AlertDeviceDisconnectedTitle" = "'%@' 已斷開"; // 'Joe's Headphones' Disconnected
+"AlertDeviceConnectedTitle" = "'%@' 已連線"; // 'Emmanuel Baraka's Headphones' Connected
+"AlertDeviceDisconnectedTitle" = "'%@' 已斷開"; // 'Emmanuel Baraka's Headphones' Disconnected
 "AlertDeviceUnknownTitle" = "未知裝置";
 "AlertDeviceCalculatingTitle" = "正在計算...";
 
@@ -29,7 +29,7 @@
 "SettingsQuitLabel" = "退出";
 "SettingsPinnedLabel" = "固定顯示";
 "SettingsEightyLabel" = "已充電至80%";
-"SettingsRateLabel" = "爲BatteryBoi評分";
+"SettingsRateLabel" = "爲BeteriApp評分";
 "SettingsEfficiencyLabel" = "低能耗模式";
 "SettingsCheckUpdatesLabel" = "檢查更新";
 "SettingsNewUpdateLabel" = "安裝更新";
@@ -59,11 +59,11 @@
 "UpdateStatusEmptyLabel" = "暫無更新";
 "UpdateStatusNewLabel" = "更新可用";
 
-"AboutTitle" = "BatteryBoi, 無常, 無限, 無邊...";
-"AboutBodyOne" = "在使用萬千程式的過程中, 錢包常常因為扣款而啜泣. 不過BatteryBoi 會向你保證永久免費, 永久開源!";
+"AboutTitle" = "BeteriApp, 無常, 無限, 無邊...";
+"AboutBodyOne" = "在使用萬千程式的過程中, 錢包常常因為扣款而啜泣. 不過BeteriApp 會向你保證永久免費, 永久開源!";
 "AboutBodyTwo" = "創造出這個小東西讓我好幾天沒合眼, 真的超累. 這就是為什麼我會希望一些個人或者商戶能夠稍稍捐贈一下我, 十分感謝.";
 "AboutBodyThree" = "您的捐贈會幫助本程式的後續維護和更新, 以及我讓每天多喝上一小杯咖啡.";
-"AboutBodyFooter" = "謝謝 - Joe (BatteryBoi 開發者)";
+"AboutBodyFooter" = "謝謝 - Emmanuel Baraka (BeteriApp 開發者)";
 "AboutGithubAction" = "Github";
 "AboutDonateAction" = "捐贈";
 "AboutShareAction" = "分享";

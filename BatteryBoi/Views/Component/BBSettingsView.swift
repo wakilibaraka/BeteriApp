@@ -297,134 +297,144 @@ struct SettingsOverlayItem: View {
     
 }
 
+// MARK: - Live Battery Stats Panel (used in DetailedPanelView)
+
+struct BatteryStatsPanel: View {
+    @ObservedObject var battery = BatteryManager.shared
+
+    let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
+    @State private var powerDraw: Double = 0
+    @State private var temperature: Double = 0
+    @State private var health: Double = 0
+    @State private var cycles: String = "—"
+    @State private var condition: String = "—"
+
+    var body: some View {
+        HStack(spacing: 8) {
+            statCell(icon: "bolt.fill",          label: "Draw",   value: powerDraw > 0   ? String(format: "%.1fW",  powerDraw)   : "—", color: .yellow)
+            statCell(icon: "thermometer",         label: "Temp",   value: temperature > 0 ? String(format: "%.0f°C", temperature) : "—", color: temperature > 40 ? .orange : .green)
+            statCell(icon: "heart.fill",          label: "Health", value: health > 0      ? String(format: "%.0f%%", health)       : "—", color: health > 80 ? .green : health > 60 ? .orange : .red)
+            statCell(icon: "arrow.2.circlepath",  label: "Cycles", value: cycles,                                                         color: .blue)
+            statCell(icon: "checkmark.seal.fill", label: "State",  value: condition,                                                       color: condition == "Normal" ? .green : .orange)
+        }
+        .onAppear { refresh() }
+        .onReceive(timer) { _ in refresh() }
+    }
+
+    @ViewBuilder
+    private func statCell(icon: String, label: String, value: String, color: Color) -> some View {
+        VStack(spacing: 3) {
+            Image(systemName: icon)
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundColor(color)
+            Text(value)
+                .font(.system(size: 11, weight: .bold))
+                .foregroundColor(.primary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
+            Text(label)
+                .font(.system(size: 8, weight: .medium))
+                .foregroundColor(.secondary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 8)
+        .background(Color.primary.opacity(0.04))
+        .cornerRadius(8)
+    }
+
+    private func refresh() {
+        powerDraw   = battery.currentPowerDraw
+        temperature = battery.batteryTemperature
+        health      = battery.batteryHealthPercent
+        cycles      = battery.metrics?.cycles.formatted ?? "—"
+        condition   = battery.metrics?.heath.rawValue   ?? "—"
+    }
+}
+
+// MARK: - Settings Form
+
 struct RedesignedSettingsFormView: View {
     @ObservedObject var settings = SettingsManager.shared
-    @ObservedObject var updates = UpdateManager.shared
-    @ObservedObject var battery = BatteryManager.shared
-    
+    @ObservedObject var updates  = UpdateManager.shared
+    @ObservedObject var battery  = BatteryManager.shared
+
+    @State private var showAdvanced = false
+
     var body: some View {
         Form {
-            Section(header: Text("General").font(.system(size: 11, weight: .bold)).foregroundColor(.secondary)) {
-                // Launch at Login
-                let autoLaunchBinding = Binding<Bool>(
-                    get: { settings.enabledAutoLaunch == .enabled },
-                    set: { 
-                        settings.objectWillChange.send()
-                        settings.enabledAutoLaunch = $0 ? .enabled : .disabled 
-                    }
-                )
+
+            // MARK: Primary — always visible
+            Section(header: Text("General")
+                        .font(.system(size: 11, weight: .bold))
+                        .foregroundColor(.secondary)) {
+
                 LabeledContent("Launch at Login") {
-                    Toggle("", isOn: autoLaunchBinding)
-                        .toggleStyle(.switch)
-                        .labelsHidden()
+                    Toggle("", isOn: Binding(
+                        get: { settings.enabledAutoLaunch == .enabled },
+                        set: {
+                            settings.enabledAutoLaunch = $0 ? .enabled : .disabled
+                        }
+                    ))
+                    .toggleStyle(.switch)
+                    .labelsHidden()
                 }
-                
-                // Keep Pinned
-                let pinnedBinding = Binding<Bool>(
-                    get: { settings.pinned == .enabled },
-                    set: { 
-                        settings.objectWillChange.send()
-                        settings.enabledPinned = $0 ? .enabled : .disabled 
-                    }
-                )
-                LabeledContent("Keep Pinned to Screen") {
-                    Toggle("", isOn: pinnedBinding)
-                        .toggleStyle(.switch)
-                        .labelsHidden()
+
+                LabeledContent("Track Bluetooth Devices") {
+                    Toggle("", isOn: Binding(
+                        get: { settings.enabledBluetoothStatus == .enabled },
+                        set: {
+                            settings.objectWillChange.send()
+                            settings.enabledBluetoothStatus = $0 ? .enabled : .disabled
+                        }
+                    ))
+                    .toggleStyle(.switch)
+                    .labelsHidden()
                 }
-                
-                // Sound Effects
-                let sfxBinding = Binding<Bool>(
-                    get: { settings.sfx == .enabled },
-                    set: { 
-                        settings.objectWillChange.send()
-                        settings.enabledSoundEffects = $0 ? .enabled : .disabled 
-                    }
-                )
-                LabeledContent("Play Sound Effects") {
-                    Toggle("", isOn: sfxBinding)
-                        .toggleStyle(.switch)
-                        .labelsHidden()
+
+                LabeledContent("Optimize Charging at 80%") {
+                    Toggle("", isOn: Binding(
+                        get: { settings.charge == .enabled },
+                        set: {
+                            settings.objectWillChange.send()
+                            settings.enabledChargeEighty = $0 ? .enabled : .disabled
+                        }
+                    ))
+                    .toggleStyle(.switch)
+                    .labelsHidden()
                 }
             }
-            
-            Section(header: Text("Battery Alerts").font(.system(size: 11, weight: .bold)).foregroundColor(.secondary)) {
-                // Show Complete at 80%
-                let chargeBinding = Binding<Bool>(
-                    get: { settings.charge == .enabled },
-                    set: { 
-                        settings.objectWillChange.send()
-                        settings.enabledChargeEighty = $0 ? .enabled : .disabled 
-                    }
-                )
-                LabeledContent("Charge Complete at 80%") {
-                    Toggle("", isOn: chargeBinding)
-                        .toggleStyle(.switch)
-                        .labelsHidden()
-                }
-                
-                // Low battery alert threshold
-                let minThresholdBinding = Binding<SettingsMinThreshold>(
-                    get: { settings.minChargeThreshold },
-                    set: { 
-                        settings.objectWillChange.send()
-                        settings.enabledMinThreshold = $0 
-                    }
-                )
-                LabeledContent("Low Battery Alert") {
-                    Picker("", selection: minThresholdBinding) {
-                        Text("Disabled").tag(SettingsMinThreshold.disabled)
-                        Text("10%").tag(SettingsMinThreshold.ten)
-                        Text("15%").tag(SettingsMinThreshold.fifteen)
-                        Text("20%").tag(SettingsMinThreshold.twenty)
-                        Text("25%").tag(SettingsMinThreshold.twentyFive)
-                        Text("30%").tag(SettingsMinThreshold.thirty)
-                        Text("35%").tag(SettingsMinThreshold.thirtyFive)
-                        Text("40%").tag(SettingsMinThreshold.forty)
-                        Text("45%").tag(SettingsMinThreshold.fortyFive)
-                        Text("50%").tag(SettingsMinThreshold.fifty)
+
+            Section(header: Text("Menu Bar")
+                        .font(.system(size: 11, weight: .bold))
+                        .foregroundColor(.secondary)) {
+
+                LabeledContent("Display") {
+                    Picker("", selection: Binding(
+                        get: { settings.display },
+                        set: { newDisplay in
+                            settings.display = newDisplay   // update @Published immediately
+                            UserDefaults.save(.enabledDisplay, value: newDisplay.rawValue)
+                        }
+                    )) {
+                        Text("Time Remaining").tag(SettingsDisplayType.countdown)
+                        Text("Percentage").tag(SettingsDisplayType.percent)
+                        Text("Cycle Count").tag(SettingsDisplayType.cycle)
+                        Text("Nothing").tag(SettingsDisplayType.empty)
+                        Text("Hidden").tag(SettingsDisplayType.hidden)
                     }
                     .labelsHidden()
                     .pickerStyle(.menu)
-                    .frame(width: 120)
+                    .frame(width: 150)
                 }
-                
-                // Full battery alert threshold
-                let maxThresholdBinding = Binding<SettingsMaxThreshold>(
-                    get: { settings.maxChargeThreshold },
-                    set: { 
-                        settings.objectWillChange.send()
-                        settings.enabledMaxThreshold = $0 
-                    }
-                )
-                LabeledContent("Full Battery Alert") {
-                    Picker("", selection: maxThresholdBinding) {
-                        Text("Disabled").tag(SettingsMaxThreshold.disabled)
-                        Text("70%").tag(SettingsMaxThreshold.seventy)
-                        Text("75%").tag(SettingsMaxThreshold.seventyFive)
-                        Text("80%").tag(SettingsMaxThreshold.eighty)
-                        Text("85%").tag(SettingsMaxThreshold.eightyFive)
-                        Text("90%").tag(SettingsMaxThreshold.ninety)
-                        Text("95%").tag(SettingsMaxThreshold.ninetyFive)
-                        Text("100%").tag(SettingsMaxThreshold.hundred)
-                    }
-                    .labelsHidden()
-                    .pickerStyle(.menu)
-                    .frame(width: 120)
-                }
-            }
-            
-            Section(header: Text("Appearance").font(.system(size: 11, weight: .bold)).foregroundColor(.secondary)) {
-                // Theme
-                let themeBinding = Binding<SettingsTheme>(
-                    get: { settings.theme },
-                    set: { 
-                        settings.objectWillChange.send()
-                        settings.enabledTheme = $0 
-                    }
-                )
-                LabeledContent("App Theme") {
-                    Picker("", selection: themeBinding) {
+
+                LabeledContent("Theme") {
+                    Picker("", selection: Binding(
+                        get: { settings.theme },
+                        set: { newTheme in
+                            settings.theme = newTheme       // fix: update @Published immediately
+                            settings.enabledTheme = newTheme
+                        }
+                    )) {
                         Text("System").tag(SettingsTheme.system)
                         Text("Light").tag(SettingsTheme.light)
                         Text("Dark").tag(SettingsTheme.dark)
@@ -434,44 +444,155 @@ struct RedesignedSettingsFormView: View {
                     .frame(width: 150)
                 }
             }
-            
 
-            
-
-            
-
-            
-            Section(header: Text("System & Updates").font(.system(size: 11, weight: .bold)).foregroundColor(.secondary)) {
-                LabeledContent("App Version") {
-                    VStack(alignment: .trailing, spacing: 4) {
-                        Text("BeteriApp \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0")")
-                            .font(.system(size: 11, weight: .semibold))
-                        Text(updates.state.subtitle(updates.checked))
-                            .font(.system(size: 9))
-                            .foregroundColor(.secondary)
-                    }
-                }
-                
-                HStack(spacing: 12) {
-                    Button(action: {
-                        SettingsManager.shared.settingsAction(.init(.appUpdateCheck))
-                    }) {
-                        Text("Check for Updates")
-                            .font(.system(size: 11, weight: .medium))
-                    }
-                    
-                    Button(action: {
-                        if let url = URL(string: "http://batteryboi.ovatar.io/index?ref=app&modal=donate") {
-                            NSWorkspace.shared.open(url)
+            // MARK: Advanced — behind gear icon disclosure
+            Section {
+                DisclosureGroup(
+                    isExpanded: $showAdvanced,
+                    content: {
+                        // Sound Effects
+                        LabeledContent("Sound Effects") {
+                            Toggle("", isOn: Binding(
+                                get: { settings.sfx == .enabled },
+                                set: {
+                                    settings.objectWillChange.send()
+                                    settings.enabledSoundEffects = $0 ? .enabled : .disabled
+                                }
+                            ))
+                            .toggleStyle(.switch)
+                            .labelsHidden()
                         }
-                    }) {
-                        Text("Support Creator")
-                            .font(.system(size: 11, weight: .medium))
+                        .padding(.top, 4)
+
+                        // Keep Pinned
+                        LabeledContent("Keep Pinned") {
+                            Toggle("", isOn: Binding(
+                                get: { settings.pinned == .enabled },
+                                set: {
+                                    settings.objectWillChange.send()
+                                    settings.enabledPinned = $0 ? .enabled : .disabled
+                                }
+                            ))
+                            .toggleStyle(.switch)
+                            .labelsHidden()
+                        }
+
+                        // Low Power Mode
+                        LabeledContent("Low Power Mode") {
+                            HStack(spacing: 6) {
+                                Circle()
+                                    .fill(battery.saver == .efficient ? Color.green : Color.secondary.opacity(0.35))
+                                    .frame(width: 7, height: 7)
+                                Text(battery.saver == .efficient ? "Active" : battery.saver == .unavailable ? "N/A" : "Off")
+                                    .font(.system(size: 10))
+                                    .foregroundColor(.secondary)
+                                if battery.saver != .unavailable {
+                                    Button(battery.saver == .efficient ? "Disable" : "Enable") {
+                                        BatteryManager.shared.powerSaveMode()
+                                    }
+                                    .buttonStyle(.plain)
+                                    .font(.system(size: 10, weight: .semibold))
+                                    .foregroundColor(.accentColor)
+                                }
+                            }
+                        }
+
+                        // Low Battery Alert
+                        LabeledContent("Low Battery Alert") {
+                            Picker("", selection: Binding(
+                                get: { settings.minChargeThreshold },
+                                set: {
+                                    settings.objectWillChange.send()
+                                    settings.enabledMinThreshold = $0
+                                }
+                            )) {
+                                Text("Disabled").tag(SettingsMinThreshold.disabled)
+                                Text("10%").tag(SettingsMinThreshold.ten)
+                                Text("15%").tag(SettingsMinThreshold.fifteen)
+                                Text("20%").tag(SettingsMinThreshold.twenty)
+                                Text("25%").tag(SettingsMinThreshold.twentyFive)
+                                Text("30%").tag(SettingsMinThreshold.thirty)
+                                Text("35%").tag(SettingsMinThreshold.thirtyFive)
+                                Text("40%").tag(SettingsMinThreshold.forty)
+                                Text("45%").tag(SettingsMinThreshold.fortyFive)
+                                Text("50%").tag(SettingsMinThreshold.fifty)
+                            }
+                            .labelsHidden()
+                            .pickerStyle(.menu)
+                            .frame(width: 110)
+                        }
+
+                        // Full Battery Alert
+                        LabeledContent("Full Battery Alert") {
+                            Picker("", selection: Binding(
+                                get: { settings.maxChargeThreshold },
+                                set: {
+                                    settings.objectWillChange.send()
+                                    settings.enabledMaxThreshold = $0
+                                }
+                            )) {
+                                Text("Disabled").tag(SettingsMaxThreshold.disabled)
+                                Text("70%").tag(SettingsMaxThreshold.seventy)
+                                Text("75%").tag(SettingsMaxThreshold.seventyFive)
+                                Text("80%").tag(SettingsMaxThreshold.eighty)
+                                Text("85%").tag(SettingsMaxThreshold.eightyFive)
+                                Text("90%").tag(SettingsMaxThreshold.ninety)
+                                Text("95%").tag(SettingsMaxThreshold.ninetyFive)
+                                Text("100%").tag(SettingsMaxThreshold.hundred)
+                            }
+                            .labelsHidden()
+                            .pickerStyle(.menu)
+                            .frame(width: 110)
+                        }
+
+                        // App Version + actions
+                        LabeledContent("Version") {
+                            VStack(alignment: .trailing, spacing: 3) {
+                                Text("BeteriApp \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0")")
+                                    .font(.system(size: 10, weight: .semibold))
+                                Text(updates.state.subtitle(updates.checked))
+                                    .font(.system(size: 9))
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+
+                        HStack(spacing: 10) {
+                            Button("Check Updates") {
+                                SettingsManager.shared.settingsAction(.init(.appUpdateCheck))
+                            }
+                            .font(.system(size: 10, weight: .medium))
+
+                            Button("Support") {
+                                if let url = URL(string: "https://batteryboi.ovatar.io/index?ref=app&modal=donate") {
+                                    NSWorkspace.shared.open(url)
+                                }
+                            }
+                            .font(.system(size: 10, weight: .medium))
+
+                            Spacer()
+
+                            Button("Quit") {
+                                SettingsManager.shared.settingsAction(.init(.appQuit))
+                            }
+                            .font(.system(size: 10, weight: .medium))
+                            .foregroundColor(.red)
+                        }
+                        .padding(.vertical, 2)
+                    },
+                    label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "gearshape.fill")
+                                .font(.system(size: 11, weight: .semibold))
+                                .foregroundColor(.secondary)
+                            Text("Advanced Settings")
+                                .font(.system(size: 12, weight: .medium))
+                                .foregroundColor(.secondary)
+                        }
                     }
-                }
-                .padding(.vertical, 4)
+                )
             }
         }
         .formStyle(.grouped)
     }
 }
+

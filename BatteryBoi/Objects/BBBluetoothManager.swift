@@ -62,7 +62,7 @@ struct BluetoothDeviceObject {
         self.subtype = BluetoothDeviceSubtype(rawValue: subtype ?? "")
         self.vendor = BluetoothVendor(rawValue: vendor ?? "")
         
-        if let subtype = self.subtype {
+        if let subtype = self.subtype, subtype != .unknown {
             self.icon = subtype.icon
             
         }

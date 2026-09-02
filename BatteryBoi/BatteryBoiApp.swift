@@ -10,6 +10,7 @@ import EnalogSwift
 import Sparkle
 import Combine
 import Foundation
+import ServiceManagement
 
 public enum SystemDistribution {
     case direct
@@ -220,57 +221,74 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
     public var updates = Set<AnyCancellable>()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // Listen for setup completion
-        NotificationCenter.default.addObserver(self, selector: #selector(handleSetupCompleted), name: NSNotification.Name("BBSetupCompleted"), object: nil)
-        
-        let hasCompletedSetup = UserDefaults.standard.bool(forKey: "hasCompletedSetup")
-        if hasCompletedSetup {
-            initializeApp()
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(handleSetupCompleted),
+            name: NSNotification.Name("BBSetupCompleted"), object: nil)
+
+        // Restore launch-at-login if user previously enabled it
+        if UserDefaults.standard.bool(forKey: "launchAtLogin") {
+            registerLaunchAtLogin()
         }
-    }
-    
-    @objc func handleSetupCompleted() {
+
+        // Always initialize unconditionally so the icon renders instantly on launch
         initializeApp()
-        
-        // Setup is complete, but we don't force open the window here anymore
-        // so the app stays cleanly in the menu bar.
     }
-    
+
+    @objc func handleSetupCompleted() {
+        // Setup is complete, app stays cleanly in the menu bar.
+    }
+
     private func initializeApp() {
+        // Create the status item and attach the icon IMMEDIATELY — no async delay
         self.status = NSStatusBar.system.statusItem(withLength: 65)
         self.hosting.frame.size = NSSize(width: 65, height: 22)
-        
-        // Ensure DetailedPanelView always shows settings since it's the right-click menu now
+
         WindowManager.shared.showSettings = true
-        
+
+        if let button = self.status?.button {
+            button.title = ""
+            button.addSubview(self.hosting)
+            button.action = #selector(applicationStatusBarButtonClicked(sender:))
+            button.target = self
+            button.sendAction(on: [.leftMouseDown, .rightMouseDown])
+            SettingsManager.shared.enabledPinned = .disabled
+        }
+
+        // Defer only non-critical setup (updates, window open, theme)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
             _ = SettingsManager.shared.enabledTheme
             _ = SettingsManager.shared.enabledDisplay()
-            
 
-            
             print("\n\nApp Installed: \(AppManager.shared.appInstalled)\n\n")
             print("App Usage (Days): \(AppManager.shared.appUsage?.day ?? 0)\n\n")
 
             UpdateManager.shared.updateCheck()
-            
+
             if UserDefaults.standard.bool(forKey: "hasCompletedSetup") {
                 WindowManager.shared.windowOpen(.userLaunched, device: nil)
             }
-            
+
             SettingsManager.shared.$display.sink { type in
                 switch type {
                     case .hidden : self.applicationMenuBarIcon(false)
-                    default : self.applicationMenuBarIcon(true)
+                    default      : self.applicationMenuBarIcon(true)
                 }
             }.store(in: &self.updates)
         }
-        
-        NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(applicationHandleURLEvent(event:reply:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
 
-        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(applicationDidWakeNotification(_:)), name: NSWorkspace.didWakeNotification, object: nil)
-        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(applicationDidSleepNotification(_:)), name: NSWorkspace.screensDidSleepNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationFocusDidMove(notification:)), name: NSWindow.didMoveNotification, object:nil)
+        NSAppleEventManager.shared().setEventHandler(
+            self, andSelector: #selector(applicationHandleURLEvent(event:reply:)),
+            forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
+
+        NSWorkspace.shared.notificationCenter.addObserver(
+            self, selector: #selector(applicationDidWakeNotification(_:)),
+            name: NSWorkspace.didWakeNotification, object: nil)
+        NSWorkspace.shared.notificationCenter.addObserver(
+            self, selector: #selector(applicationDidSleepNotification(_:)),
+            name: NSWorkspace.screensDidSleepNotification, object: nil)
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(applicationFocusDidMove(notification:)),
+            name: NSWindow.didMoveNotification, object: nil)
     }
     
     private func applicationMenuBarIcon(_ visible:Bool) {
@@ -382,4 +400,37 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
         
     }
     
+}
+
+// MARK: - Launch at Login (macOS 13+)
+
+extension AppDelegate {
+
+    var launchAtLoginEnabled: Bool {
+        SMAppService.mainApp.status == .enabled
+    }
+
+    func registerLaunchAtLogin() {
+        do {
+            if SMAppService.mainApp.status == .notRegistered {
+                try SMAppService.mainApp.register()
+            }
+        } catch {
+            print("Failed to register launch at login: \(error)")
+        }
+    }
+
+    func setLaunchAtLogin(_ enabled: Bool) {
+        do {
+            if enabled {
+                try SMAppService.mainApp.register()
+            } else {
+                try SMAppService.mainApp.unregister()
+            }
+            UserDefaults.standard.set(enabled, forKey: "launchAtLogin")
+        } catch {
+            print("SMAppService error: \(error)")
+        }
+    }
+
 }

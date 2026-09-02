@@ -1,87 +1,87 @@
 
-![BatteryBoi Promo image](https://pub-3d59231d7ecc43e7af32a82026f9e071.r2.dev/BatteryBoi%20Poster.jpg)
+![BeteriApp Promo image](https://pub-3d59231d7ecc43e7af32a82026f9e071.r2.dev/BeteriApp%20Poster.jpg)
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-![GitHub Sponsors](https://img.shields.io/github/sponsors/thebarbican19)
-[![Github All Releases](https://img.shields.io/github/downloads/thebarbican19/BatteryBoi/total.svg)]()
-![GitHub contributors](https://img.shields.io/github/contributors/thebarbican19/BatteryBoi)
+![GitHub Sponsors](https://img.shields.io/github/sponsors/Baraka254)
+[![Github All Releases](https://img.shields.io/github/downloads/Baraka254/BeteriApp/total.svg)]()
+![GitHub contributors](https://img.shields.io/github/contributors/Baraka254/BeteriApp)
 [![Swift Version](https://img.shields.io/badge/Swift-5.x-orange.svg)]()
 [![MacOS Version](https://img.shields.io/badge/Supported%20Version-v11.0,%20v12.0,%20v13.0,%20v14.0+-orange)]()
-[![Twitter](https://img.shields.io/badge/Follow%20BatteryBoiApp-black)](https://twitter.com/batteryboiapp)
+[![Twitter](https://img.shields.io/badge/Follow%20BeteriAppApp-black)](https://twitter.com/beteriappapp)
 
 
-# BatteryBoi - A Battery Indicator to Rule Them All!
-**BatteryBoi** is a **replacement Battery Indicator for the MacOS Menu Bar**. <br><br>
+# BeteriApp - A Battery Indicator to Rule Them All!
+**BeteriApp** is a **replacement Battery Indicator for the MacOS Menu Bar**. <br><br>
 
 ## Why
-The battery icon really needed an indicator for how much time is left in terms of minutes and hours. So as a fun evening project, I ([Mojito Joe](https://twitter.com/mistermeenr)) built it. 
+The battery icon really needed an indicator for how much time is left in terms of minutes and hours. So as a fun evening project, I ([Emmanuel Baraka](https://twitter.com/Baraka254)) built it. 
 
 <br>
 However, because of popular demand, the scope of this project has expanded significantly to be a full-fledged, open-source, completely free battery app giving you beautiful notifications and insights into your battery, and even your connected Bluetooth devices<br><br><br>
 <br>
 
 ## News! News! News! - Version 3.0 & the iOS App
-After crossing 20k downloads, I am happy to launch not only some huge updates coming to Version 3.0, but also the release of the BatteryBoi iOS and iPadOS apps. Plus much more. 
+After crossing 20k downloads, I am happy to launch not only some huge updates coming to Version 3.0, but also the release of the BeteriApp iOS and iPadOS apps. Plus much more. 
 <br>
 
-**See the full post about it all [here](https://github.com/thebarbican19/BatteryBoi/discussions/62)**
+**See the full post about it all [here](https://github.com/Baraka254/BeteriApp/discussions/62)**
 
 <br><br>
 
 ## How (to Install)
 
 #### Manual Download
-1. You can install the app by downloading the [latest released .DMG file](https://github.com/thebarbican19/BatteryBoi/releases/). This contains an executable version of the app - **you do not need to Xcode to run this.**
-2. Open/mount the DMG file and drag BatteryBoi into the Applications Folder. And that's it!
+1. You can install the app by downloading the [latest released .DMG file](https://github.com/Baraka254/BeteriApp/releases/). This contains an executable version of the app - **you do not need to Xcode to run this.**
+2. Open/mount the DMG file and drag BeteriApp into the Applications Folder. And that's it!
 3. You can hide the default battery icon by going to **System Preferences** > **Control Center** > **Battery** > **Show in Menu Bar**
 <br><br><br>
 
 #### Homebrew
-You can install BatteryBoi via Homebrew thanks to the contribution from [Marcus Kannicht](https://github.com/kannicht). `$ brew install batteryboi`
+You can install BeteriApp via Homebrew thanks to the contribution from [Marcus Kannicht](https://github.com/kannicht). `$ brew install beteriapp`
 
 <br><br><br>
 
 ### Works On...
-**BatteryBoi** runs on **both Intel & Silicon (M1 & M2)** for the following MacOS versions
+**BeteriApp** runs on **both Intel & Silicon (M1 & M2)** for the following MacOS versions
 - 11.0 (Big Sur)
 - 12.0 (Monterey)
 - 13.0 (Ventura)
 - 14.0 (Sonoma)
-- 15.0 [(Big Chungus)](https://twitter.com/mistermeenr/status/1643378900313964544?s=20)
+- 15.0 [(Big Chungus)](https://twitter.com/Baraka254/status/1643378900313964544?s=20)
 
 <br><br><br>
 
 ## Localization
-**BatteryBoi** has been Localized into the following languages, either by way of auto-translation or by direct translation by the community.
+**BeteriApp** has been Localized into the following languages, either by way of auto-translation or by direct translation by the community.
 
 #### Verified
-- 🇬🇧 [English](https://github.com/thebarbican19/BatteryBoi/tree/main/BatteryBoi/Other/Localization/en.lproj/LocalizableMain.strings)
-- 🇯🇵 [Japanese](https://github.com/thebarbican19/BatteryBoi/tree/main/BatteryBoi/Other/Localization/ja.lproj/LocalizableMain.strings) (Provided by [@fus1ondev](https://github.com/fus1ondev))
-- 🇷🇺 [Russian](https://github.com/thebarbican19/BatteryBoi/tree/main/BatteryBoi/Other/Localization/ru.lproj/LocalizableMain.strings) (Provided by [Alexey Petraky @ko-oler](https://github.com/ko-oler))
-- 🇳🇱 [Dutch](https://github.com/thebarbican19/BatteryBoi/tree/main/BatteryBoi/Other/Localization/nl.lproj/LocalizableMain.strings) (Provided by [@joostiphone](https://github.com/joostiphone))
-- 🇹🇷 [Turkish](https://github.com/thebarbican19/BatteryBoi/tree/main/BatteryBoi/Other/Localization/tr.lproj/LocalizableMain.strings) (Provided by [Soner Kalonya @kalonya](https://github.com/kalonya))
-- 🇨🇳 [Chinese (Simplified)](https://github.com/thebarbican19/BatteryBoi/tree/main/BatteryBoi/Other/Localization/tr.lproj/LocalizableMain.strings) (Provided by [Desmoed Richtofen @Shane1119](https://github.com/Shane1119))
-- 🇹🇼 [Chinese (Traditional)](https://github.com/thebarbican19/BatteryBoi/tree/main/BatteryBoi/Other/Localization/tr.lproj/LocalizableMain.strings) (Provided by [Desmoed Richtofen @Shane1119](https://github.com/Shane1119))
-- 🇸🇰 [Slovenian](https://github.com/thebarbican19/BatteryBoi/tree/main/BatteryBoi/Other/Localization/tr.lproj/LocalizableMain.strings) (Provided by [@drodmantras](https://github.com/drodmantras))
-- 🇸🇰 [Slovak](https://github.com/thebarbican19/BatteryBoi/tree/main/BatteryBoi/Other/Localization/tr.lproj/LocalizableMain.strings) (Provided by [@Svec-Tomas](https://github.com/Svec-Tomas))
-- 🇻🇳 [Vietnamese](https://github.com/thebarbican19/BatteryBoi/tree/main/BatteryBoi/Other/Localization/vi.lproj/LocalizableMain.strings) (Provided by [Hieu Huynh @hieuhuynh93](https://github.com/hieuhuynh93))
-- 🇪🇸 [Spanish](https://github.com/thebarbican19/BatteryBoi/tree/main/BatteryBoi/Other/Localization/es.lproj/LocalizableMain.strings) (Provided by [@David C](https://github.com/davidcafor))
-- 🇩🇪 [German](https://github.com/thebarbican19/BatteryBoi/tree/main/BatteryBoi/Other/Localization/de.lproj/LocalizableMain.strings) (Provided by  [Hendrik Erz @nathanlesage](https://github.com/nathanlesage))
-- 🇰🇷 [Korean](https://github.com/thebarbican19/BatteryBoi/tree/main/BatteryBoi/Other/Localization/ko.lproj/LocalizableMain.strings) (Provided by  [YiGeon @YiGeon](https://github.com/YiGeon))
-- 🇫🇷 [French](https://github.com/thebarbican19/BatteryBoi/tree/main/BatteryBoi/Other/Localization/fr.lproj/LocalizableMain.strings) (Provided by  [Ben Wayne](https://github.com/))
-- 🇮🇹 [Italian](https://github.com/thebarbican19/BatteryBoi/tree/main/BatteryBoi/Other/Localization/it.lproj/LocalizableMain.strings) (Provided by  [Francesco @katullo11](https://github.com/katullo11))
+- 🇬🇧 [English](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/en.lproj/LocalizableMain.strings)
+- 🇯🇵 [Japanese](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/ja.lproj/LocalizableMain.strings) (Provided by [@fus1ondev](https://github.com/fus1ondev))
+- 🇷🇺 [Russian](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/ru.lproj/LocalizableMain.strings) (Provided by [Alexey Petraky @ko-oler](https://github.com/ko-oler))
+- 🇳🇱 [Dutch](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/nl.lproj/LocalizableMain.strings) (Provided by [@joostiphone](https://github.com/joostiphone))
+- 🇹🇷 [Turkish](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/tr.lproj/LocalizableMain.strings) (Provided by [Soner Kalonya @kalonya](https://github.com/kalonya))
+- 🇨🇳 [Chinese (Simplified)](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/tr.lproj/LocalizableMain.strings) (Provided by [Desmoed Richtofen @Shane1119](https://github.com/Shane1119))
+- 🇹🇼 [Chinese (Traditional)](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/tr.lproj/LocalizableMain.strings) (Provided by [Desmoed Richtofen @Shane1119](https://github.com/Shane1119))
+- 🇸🇰 [Slovenian](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/tr.lproj/LocalizableMain.strings) (Provided by [@drodmantras](https://github.com/drodmantras))
+- 🇸🇰 [Slovak](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/tr.lproj/LocalizableMain.strings) (Provided by [@Svec-Tomas](https://github.com/Svec-Tomas))
+- 🇻🇳 [Vietnamese](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/vi.lproj/LocalizableMain.strings) (Provided by [Hieu Huynh @hieuhuynh93](https://github.com/hieuhuynh93))
+- 🇪🇸 [Spanish](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/es.lproj/LocalizableMain.strings) (Provided by [@David C](https://github.com/davidcafor))
+- 🇩🇪 [German](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/de.lproj/LocalizableMain.strings) (Provided by  [Hendrik Erz @nathanlesage](https://github.com/nathanlesage))
+- 🇰🇷 [Korean](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/ko.lproj/LocalizableMain.strings) (Provided by  [YiGeon @YiGeon](https://github.com/YiGeon))
+- 🇫🇷 [French](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/fr.lproj/LocalizableMain.strings) (Provided by  [Ben Wayne](https://github.com/))
+- 🇮🇹 [Italian](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/it.lproj/LocalizableMain.strings) (Provided by  [Francesco @katullo11](https://github.com/katullo11))
 
 
 
 #### Unverified/Auto-Translated
-- 🇵🇹 [Portuguese (Traditional)](https://github.com/thebarbican19/BatteryBoi/tree/main/BatteryBoi/Other/Localization/pt-PT.lproj/LocalizableMain.strings)
-- 🇧🇷 [Portuguese (Brazil)](https://github.com/thebarbican19/BatteryBoi/tree/main/BatteryBoi/Other/Localization/pt-BR.lproj/LocalizableMain.strings)
+- 🇵🇹 [Portuguese (Traditional)](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/pt-PT.lproj/LocalizableMain.strings)
+- 🇧🇷 [Portuguese (Brazil)](https://github.com/Baraka254/BeteriApp/tree/main/BeteriApp/Other/Localization/pt-BR.lproj/LocalizableMain.strings)
 
 <br>
 
 **If you would like to help by verifying your native language, or if it is not yet on the list, add it!**
 
-You can do this on our [Crowdin Translation Page](https://crowdin.com/project/batteryboi?already_accepted=16003147)
+You can do this on our [Crowdin Translation Page](https://crowdin.com/project/beteriapp?already_accepted=16003147)
 
 
 
@@ -95,7 +95,7 @@ With continued support, I will be adding...
 - [x] **👴🏻 Support for macOS Monterey & Big Sur (v11)**
 - [ ] **🟡 System Colour Alerts & Charging Icon**
 - [ ] **🪫 Low Power Mode Toggle** (Suggested by [@Crear12](https://github.com/Crear12))
-- [x] **🇲🇽 Multiple Language Support** (Helo Translate for your local language here https://github.com/thebarbican19/BatteryBoi/issues/12)
+- [x] **🇲🇽 Multiple Language Support** (Helo Translate for your local language here https://github.com/Baraka254/BeteriApp/issues/12)
 - [x] **⬇️ Sparkle Integration**
 - [x] **🚨 Improved Alerts**
 - [x] **🏝️ A Dynamic Island-Style Modal with Sexy Indicator**
@@ -126,10 +126,10 @@ With continued support, I will be adding...
 
 ## Q&A
 **Q.** Is the app GDPR compliment?<br>
-**A.** BatteryBoi does not collect, store, process, or transfer any personal information as defined by Article 4, Section 1 of the GDPR
+**A.** BeteriApp does not collect, store, process, or transfer any personal information as defined by Article 4, Section 1 of the GDPR
 <br><br>
 **Q.** Does this app steal my data? <br>
-**A.** The app **only logs installs** with [Enalog](https://github.com/thebarbican19/EnalogSwift). <br><br>&ensp;&ensp;&ensp;The information captured in this logging event is... <br><br>&ensp;&ensp;&ensp; - **Device Architecture (Silicon or Intel)** <br>
+**A.** The app **only logs installs** with [Enalog](https://github.com/Baraka254/EnalogSwift). <br><br>&ensp;&ensp;&ensp;The information captured in this logging event is... <br><br>&ensp;&ensp;&ensp; - **Device Architecture (Silicon or Intel)** <br>
 &ensp;&ensp;&ensp; - **MacOS Version Number**<br>
 &ensp;&ensp;&ensp; - **System Locale (ISO Country Code)** <br>
 &ensp;&ensp;&ensp; - **Theme (Dark/Light Mode)**. 
@@ -147,17 +147,17 @@ With continued support, I will be adding...
 **A.** Yes! Go to **System Preferences** > **Control Center** > **Battery** > **Show in Menu Bar** and toggle it on. 
 <br><br>
 **Q.** Is there support for 3rd Party Devices?<br>
-**A.** Devices that are connected (via Bluetooth) now show up with their battery level (if available) in BatteryBoi.
+**A.** Devices that are connected (via Bluetooth) now show up with their battery level (if available) in BeteriApp.
 <br><br>
 **Q.** Some Bluetooth devices don't show the Battery Level. Why?<br>
-**A.** BatteryBoi uses **System Information** to get this information, if it's not in here the device simply may not offer this information or it isn't supported.
+**A.** BeteriApp uses **System Information** to get this information, if it's not in here the device simply may not offer this information or it isn't supported.
 
 <br><br><br>
 
-## BatteryBoi In the Media
-Here's a list of places BatteryBoi has been featured across the web and across the world. 
-- [🇯🇵 Apple CH](https://applech2.com/archives/20230831-batteryboi-for-macbook-battery.html)
-- [🇩🇪 iFun](https://www.ifun.de/batteryboi-zeigt-die-restliche-akku-laufzeit-in-der-menueleiste-215907/)
+## BeteriApp In the Media
+Here's a list of places BeteriApp has been featured across the web and across the world. 
+- [🇯🇵 Apple CH](https://applech2.com/archives/20230831-beteriapp-for-macbook-battery.html)
+- [🇩🇪 iFun](https://www.ifun.de/beteriapp-zeigt-die-restliche-akku-laufzeit-in-der-menueleiste-215907/)
 
 <br><br><br>
 

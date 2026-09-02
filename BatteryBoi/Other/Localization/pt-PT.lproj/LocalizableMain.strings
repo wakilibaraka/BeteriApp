@@ -3,8 +3,8 @@
 "AlertChargingTitle" = "A Carregar...";
 "AlertChargingStoppedTitle" = "Carregador Retirado";
 "AlertChargingCompleteTitle" = "Carga Completa";
-"AlertDeviceConnectedTitle" = "'%@' Conectado"; // 'Auscultadores do Joe' Conectado
-"AlertDeviceDisconnectedTitle" = "'%@' Desconectado"; // 'Auscultadores do Joe' Desconectado
+"AlertDeviceConnectedTitle" = "'%@' Conectado"; // 'Auscultadores do Emmanuel Baraka' Conectado
+"AlertDeviceDisconnectedTitle" = "'%@' Desconectado"; // 'Auscultadores do Emmanuel Baraka' Desconectado
 "AlertDeviceUnknownTitle" = "Desconhecido";
 "AlertDeviceCalculatingTitle" = "A Calcular...";
 
@@ -55,11 +55,11 @@
 "UpdateStatusEmptyLabel" = "Sem Atualizações Disponíveis";
 "UpdateStatusNewLabel" = "Nova atualização disponível!";
 
-"AboutTitle" = "BatteryBoi, grátis, para sempre, para todos...";
-"AboutBodyOne" = "Na agitada paisagem de apps onde as carteiras frequentemente sofrem com assinaturas recorrentes, o BatteryBoi é 100% gratuito e de código aberto, para sempre!";
+"AboutTitle" = "BeteriApp, grátis, para sempre, para todos...";
+"AboutBodyOne" = "Na agitada paisagem de apps onde as carteiras frequentemente sofrem com assinaturas recorrentes, o BeteriApp é 100% gratuito e de código aberto, para sempre!";
 "AboutBodyTwo" = "Construir um app que parece tão bom demanda muitos dias de trabalho, suor e às vezes lágrimas. É por isso que estou pedindo para pessoas e empresas que podem, considerem fazer uma doação.";
 "AboutBodyThree" = "As doações manterão as luzes acesas e os updates e correções fluindo.";
-"AboutBodyFooter" = "Obrigado - Joe (Fundador do BatteryBoi)";
+"AboutBodyFooter" = "Obrigado - Emmanuel Baraka (Fundador do BeteriApp)";
 "AboutGithubAction" = "GitHub";
 "AboutDonateAction" = "Doar";
 "AboutShareAction" = "Compartilhar";

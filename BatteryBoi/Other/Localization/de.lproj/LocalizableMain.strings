@@ -4,8 +4,8 @@
 "AlertChargingTitle" = "Lädt...";
 "AlertChargingStoppedTitle" = "Ladegerät entfernt";
 "AlertChargingCompleteTitle" = "Ladevorgang abgeschlossen";
-"AlertDeviceConnectedTitle" = "'%@' verbunden"; // 'Joe's Headphones' Connected
-"AlertDeviceDisconnectedTitle" = "'%@' getrennt"; // 'Joe's Headphones' Disconnected
+"AlertDeviceConnectedTitle" = "'%@' verbunden"; // 'Emmanuel Baraka's Headphones' Connected
+"AlertDeviceDisconnectedTitle" = "'%@' getrennt"; // 'Emmanuel Baraka's Headphones' Disconnected
 "AlertDeviceUnknownTitle" = "Unbekannt";
 "AlertDeviceCalculatingTitle" = "Berechne...";
 
@@ -30,7 +30,7 @@
 "SettingsQuitLabel" = "Beenden";
 "SettingsPinnedLabel" = "An Bildschirm anheften";
 "SettingsEightyLabel" = "Lade bis 80%";
-"SettingsRateLabel" = "Bewerte BatteryBoi";
+"SettingsRateLabel" = "Bewerte BeteriApp";
 "SettingsEfficiencyLabel" = "Energiesparmodus";
 "SettingsCheckUpdatesLabel" = "Nach Updates suchen";
 "SettingsNewUpdateLabel" = "Neues Update installieren";
@@ -60,11 +60,11 @@
 "UpdateStatusEmptyLabel" = "Keine Updates verfügbar";
 "UpdateStatusNewLabel" = "Neues Update verfügbar!";
 
-"AboutTitle" = "BatteryBoi, kostenlos, für immer, für alle...";
-"AboutBodyOne" = "In der hektischen App-Landschaft, wo Geldbeutel oft wegen wiederkehrenden Abonnements leiden, ist BatteryBoi 100% kostenlos & Open-Source, für immer!";
+"AboutTitle" = "BeteriApp, kostenlos, für immer, für alle...";
+"AboutBodyOne" = "In der hektischen App-Landschaft, wo Geldbeutel oft wegen wiederkehrenden Abonnements leiden, ist BeteriApp 100% kostenlos & Open-Source, für immer!";
 "AboutBodyTwo" = "Die Erstellung einer so gut aussehenden App ist das Ergebnis vieler Tage Arbeit, Blut, Schweiß und manchmal Tränen. Deshalb bitte ich Menschen und Unternehmen, die es sich leisten können, eine Spende in Erwägung zu ziehen.";
 "AboutBodyThree" = "Spenden halten die Lichter an und sorgen für kontinuierliche Updates und Fehlerbehebungen.";
-"AboutBodyFooter" = "Danke - Joe (Gründer von BatteryBoi)";
+"AboutBodyFooter" = "Danke - Emmanuel Baraka (Gründer von BeteriApp)";
 "AboutGithubAction" = "GitHub";
 "AboutDonateAction" = "Spenden";
 "AboutShareAction" = "Teilen";

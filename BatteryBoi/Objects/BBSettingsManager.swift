@@ -85,29 +85,6 @@ enum SettingsCharged:String {
 }
 
 
-enum SettingsBeta:String {
-    case enabled
-    case disabled
-
-    var subtitle:String {
-        switch self {
-            case .enabled : "SettingsEnabledLabel".localise()
-            default : "SettingsDisabledLabel".localise()
-
-        }
-
-    }
-
-    var icon:String {
-        switch self {
-            case .enabled : "AudioIcon"
-            default : "MuteIcon"
-
-        }
-
-    }
-
-}
 
 enum SettingsMinThreshold: Int {
     case disabled = 0
@@ -388,36 +365,22 @@ class SettingsManager:ObservableObject {
         }
         
         set {
-            if self.enabledAutoLaunch != .undetermined {
-                if #available(macOS 13.0, *) {
-                    do {
-                        if newValue == .disabled {
-                            if SMAppService.mainApp.status == .enabled {
-                               try SMAppService.mainApp.unregister()
-                                
-                           }
-                    
+            if #available(macOS 13.0, *) {
+                do {
+                    if newValue == .disabled {
+                        if SMAppService.mainApp.status == .enabled {
+                            try SMAppService.mainApp.unregister()
                         }
-                        else {
-                            if SMAppService.mainApp.status != .enabled {
-                                try SMAppService.mainApp.register()
-                                
-                            }
-                            
+                    } else {
+                        if SMAppService.mainApp.status != .enabled {
+                            try SMAppService.mainApp.register()
                         }
-                        
-                        UserDefaults.save(.enabledLogin, value: newValue.enabled)
-                        
                     }
-                    catch {
-                        EnalogManager.main.ingest(SystemEvents.fatalError, description: error.localizedDescription)
-                        
-                    }
-                    
+                    UserDefaults.save(.enabledLogin, value: newValue.enabled)
+                } catch {
+                    EnalogManager.main.ingest(SystemEvents.fatalError, description: error.localizedDescription)
                 }
-                
             }
-           
         }
         
     }
@@ -640,9 +603,7 @@ class SettingsManager:ObservableObject {
                 
             }
             else {
-                //let devices = IOBluetoothDevice.pairedDevices() as? [IOBluetoothDevice]
-
-                switch UserDefaults.main.bool(forKey: SystemDefaultsKeys.enabledBluetooth.rawValue) {
+            switch UserDefaults.main.bool(forKey: SystemDefaultsKeys.enabledBluetooth.rawValue) {
                     case true : return .enabled
                     case false : return .disabled
                     
@@ -664,7 +625,7 @@ class SettingsManager:ObservableObject {
     
     public func settingsAction(_ action:SettingsActionObject) {
         if action.type == .appWebsite {
-            if let url = URL(string: "http://batteryboi.ovatar.io/index?ref=app&modal=donate") {
+            if let url = URL(string: "https://batteryboi.ovatar.io/index?ref=app&modal=donate") {
                 NSWorkspace.shared.open(url)
 
             }
@@ -693,7 +654,7 @@ class SettingsManager:ObservableObject {
         }
         else if action.type == .appInstallUpdate {
             if let update = UpdateManager.shared.available {
-                if let url = URL(string: "http://batteryboi.ovatar.io/index?modal=update") {
+                if let url = URL(string: "https://batteryboi.ovatar.io/index?modal=update") {
                     NSWorkspace.shared.open(url)
                     
                     EnalogManager.main.ingest(SystemEvents.userUpdated, description: "Updating to \(update.version.formatted)")
@@ -705,7 +666,7 @@ class SettingsManager:ObservableObject {
         }
         else if action.type == .appUpdateCheck {
             if let update = UpdateManager.shared.available {
-                if let url = URL(string: "http://batteryboi.ovatar.io/index?modal=update") {
+            if let url = URL(string: "https://batteryboi.ovatar.io/index?modal=update") {
                     NSWorkspace.shared.open(url)
 
                     EnalogManager.main.ingest(SystemEvents.userUpdated, description: "Updating to \(update.version.formatted)")
@@ -724,9 +685,6 @@ class SettingsManager:ObservableObject {
                 BatteryManager.shared.powerSaveMode()
 
             }
-            
-        }
-        else if action.type == .appBeta {
             
         }
         else if action.type == .appPinned {
@@ -785,21 +743,13 @@ class SettingsManager:ObservableObject {
         
 //        if #available(macOS 12.0, *) {
 //            output.append(.init(.appEfficencyMode))
-//            
 //        }
-        #if DEBUG
-            output.append(.init(.appPinned))
 
-        #endif
-
+        output.append(.init(.customiseCharge))
         output.append(.init(.customiseDisplay))
         output.append(.init(.customiseSoundEffects))
         output.append(.init(.customiseMinThreshold))
         output.append(.init(.customiseMaxThreshold))
-
-        #if DEBUG
-            output.append(.init(.customiseCharge))
-        #endif
 
         if AppManager.shared.appDistribution() == .direct {
             output.append(.init(.appUpdateCheck))

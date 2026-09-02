@@ -3,8 +3,8 @@
 "AlertChargingTitle" = "Polnjenje...";
 "AlertChargingStoppedTitle" = "Napajalnik odstranjen";
 "AlertChargingCompleteTitle" = "Polnjenje končano";
-"AlertDeviceConnectedTitle" = "'%@' povezane"; // 'Joe's Headphones' Connected
-"AlertDeviceDisconnectedTitle" = "'%@' odvezane"; // 'Joe's Headphones' Disconnected
+"AlertDeviceConnectedTitle" = "'%@' povezane"; // 'Emmanuel Baraka's Headphones' Connected
+"AlertDeviceDisconnectedTitle" = "'%@' odvezane"; // 'Emmanuel Baraka's Headphones' Disconnected
 "AlertDeviceUnknownTitle" = "Neznano";
 "AlertDeviceCalculatingTitle" = "Računanje...";
 
@@ -29,7 +29,7 @@
 "SettingsQuitLabel" = "Izhod";
 "SettingsPinnedLabel" = "Pin to Screen";
 "SettingsEightyLabel" = "Charge to 80%";
-"SettingsRateLabel" = "Rate BatteryBoi";
+"SettingsRateLabel" = "Rate BeteriApp";
 "SettingsEfficiencyLabel" = "Nizkoenergijski način";
 "SettingsCheckUpdatesLabel" = "Preveri posodobitve";
 "SettingsNewUpdateLabel" = "Namesti posodobitev";
@@ -59,11 +59,11 @@
 "UpdateStatusEmptyLabel" = "Na voljo ni novejše različice";
 "UpdateStatusNewLabel" = "Na voljo nova različica!";
 
-"AboutTitle" = "BatteryBoi, Brezplačno, Za vedno, za vse...";
-"AboutBodyOne" = "V svetu, kjer aplikacije pogosto zahtevajo naročnine. BatteryBoi je 100% brezplačen in odprtokodni, za vedno!";
+"AboutTitle" = "BeteriApp, Brezplačno, Za vedno, za vse...";
+"AboutBodyOne" = "V svetu, kjer aplikacije pogosto zahtevajo naročnine. BeteriApp je 100% brezplačen in odprtokodni, za vedno!";
 "AboutBodyTwo" = "Ustvarjanje te aplikacije, ki izgleda tako dobro, je mnogo dni dela, krvnega znoja in včasih solz. Zato prosim ljudi in podjetja, ki si to lahko privoščijo, da razmislijo o doniranju.";
 "AboutBodyThree" = "Donacije bodo omogočile, da luči ostanejo prižgane in da bodo posodobitve tekle.";
-"AboutBodyFooter" = "Hvala - Joe (Ustanovitelj aplikacije BatteryBoi)";
+"AboutBodyFooter" = "Hvala - Emmanuel Baraka (Ustanovitelj aplikacije BeteriApp)";
 "AboutGithubAction" = "GitHub";
 "AboutDonateAction" = "Doniraj";
 "AboutShareAction" = "Deli";

@@ -5,8 +5,8 @@
 "AlertChargingCompleteTitle" = "Opladen Gereed";
 "AlertOverheatingTitle" = "Oververhitting";
 "AlertLimitedTitle" = "Niet genoeg batterij...";
-"AlertDeviceConnectedTitle" = "'%@' Verbonden"; // 'Joe's Headphones' Connected
-"AlertDeviceDisconnectedTitle" = "'%@' Ontkoppeld"; // 'Joe's Headphones' Disconnected
+"AlertDeviceConnectedTitle" = "'%@' Verbonden"; // 'Emmanuel Baraka's Headphones' Connected
+"AlertDeviceDisconnectedTitle" = "'%@' Ontkoppeld"; // 'Emmanuel Baraka's Headphones' Disconnected
 "" = "Onbekend";
 "AlertDeviceCalculatingTitle" = "Aan het rekenen...";
 
@@ -34,7 +34,7 @@
 "SettingsQuitLabel" = "Afsluiten";
 "SettingsPinnedLabel" = "Vastmaken aan scherm";
 "SettingsEightyLabel" = "Opladen tot 80%";
-"SettingsRateLabel" = "Beoordeel BatteryBoi";
+"SettingsRateLabel" = "Beoordeel BeteriApp";
 "SettingsEfficiencyLabel" = "Laag Vermogen";
 "SettingsCheckUpdatesLabel" = "Check voor Updates";
 "SettingsNewUpdateLabel" = "Installeer Nieuwe Update";
@@ -65,11 +65,11 @@
 "UpdateStatusEmptyLabel" = "Geen Updates Beschikbaar";
 "UpdateStatusNewLabel" = "Nieuwe Update Beschikbaar!";
 
-"AboutTitle" = "BatteryBoi, Gratis, Altijd, voor Iedereen..";
-"AboutBodyOne" = "In het drukke app-landschap waar portemonnees vaak huilen door terugkerende abonnementen. BatteryBoi is 100% gratis & Open-Source, voor altijd!";
+"AboutTitle" = "BeteriApp, Gratis, Altijd, voor Iedereen..";
+"AboutBodyOne" = "In het drukke app-landschap waar portemonnees vaak huilen door terugkerende abonnementen. BeteriApp is 100% gratis & Open-Source, voor altijd!";
 "AboutBodyTwo" = "Het is vele dagen werk, bloed, zweet en soms tranen om deze app te ontwikkelen die er zo goed uitziet. Daarom vraag ik mensen en bedrijven die het zich kunnen veroorloven om een donatie te overwegen.";
 "AboutBodyThree" = "Donaties zorgen ervoor dat het licht blijft branden en dat er updates/fixes blijven komen.";
-"AboutBodyFooter" = "Bedankt - Joe (Oprichter van BatteryBoi)";
+"AboutBodyFooter" = "Bedankt - Emmanuel Baraka (Oprichter van BeteriApp)";
 "AboutGithubAction" = "GitHub";
 "AboutDonateAction" = "Doneer";
 "AboutShareAction" = "Deel";
